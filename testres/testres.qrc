@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/test">
+        <file>BG1.jpg</file>
+        <file>icon1.jpg</file>
+        <file>nku.png</file>
+        <file>ANIMA.jpg</file>
+        <file>Lust.jpg</file>
+        <file>sdorica.jpg</file>
+    </qresource>
+</RCC>
