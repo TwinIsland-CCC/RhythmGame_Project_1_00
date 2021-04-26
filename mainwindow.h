@@ -2,8 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMovie>
 #include "tutorialwindow.h"
 #include "protutorialwidget.h"
+#include "playscene.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,6 +23,7 @@ private:
     Ui::MainWindow *ui;
     tutorialwindow tutorial1;
     protutorialwidget tutorial2;
+    QMovie movie;
 
 };
 #endif // MAINWINDOW_H
