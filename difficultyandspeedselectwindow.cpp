@@ -22,6 +22,11 @@ DifficultyAndSpeedSelectWindow::DifficultyAndSpeedSelectWindow(QWidget *parent) 
         game->show();
         this->hide();
     });
+
+
+    //新需求：显示历史最高成绩以及评价
+
+
 }
 
 DifficultyAndSpeedSelectWindow::~DifficultyAndSpeedSelectWindow()

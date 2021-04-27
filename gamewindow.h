@@ -15,6 +15,15 @@ public:
     explicit Gamewindow(QWidget *parent = nullptr);
     ~Gamewindow();
 
+signals:
+    void Z_triggered();
+    void X_triggered();
+
+
+protected:
+    void keyPressEvent(QKeyEvent *event);//检测按键
+    void keyReleaseEvent(QKeyEvent *event);
+
 private:
     Ui::Gamewindow *ui;
 };

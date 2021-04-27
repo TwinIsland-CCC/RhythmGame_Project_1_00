@@ -137,6 +137,7 @@
     </property>
     <addaction name="tutorial"/>
     <addaction name="protutorial"/>
+    <addaction name="potentialtable"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
@@ -167,6 +168,14 @@
   <action name="group">
    <property name="text">
     <string>交流群</string>
+   </property>
+  </action>
+  <action name="potentialtable">
+   <property name="text">
+    <string>定数表查询</string>
+   </property>
+   <property name="toolTip">
+    <string>定数表查询</string>
    </property>
   </action>
  </widget>

@@ -14,6 +14,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     musicselectwindow.cpp \
+    note.cpp \
     playscene.cpp \
     protutorialwidget.cpp \
     source.cpp \
@@ -24,6 +25,7 @@ HEADERS += \
     gamewindow.h \
     mainwindow.h \
     musicselectwindow.h \
+    note.h \
     playscene.h \
     protutorialwidget.h \
     source.h \

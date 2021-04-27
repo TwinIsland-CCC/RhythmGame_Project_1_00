@@ -18,10 +18,6 @@ public:
 private:
     Ui::PlayScene *ui;
 
-protected:
-    void keyPressEvent(QKeyEvent *event);//检测按键
-    void keyReleaseEvent(QKeyEvent *event);
-
 signals:
     void backbtnpushed();
 };
