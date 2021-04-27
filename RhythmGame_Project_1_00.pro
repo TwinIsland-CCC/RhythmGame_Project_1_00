@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     difficultyandspeedselectwindow.cpp \
+    gamewindow.cpp \
     main.cpp \
     mainwindow.cpp \
     musicselectwindow.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 
 HEADERS += \
     difficultyandspeedselectwindow.h \
+    gamewindow.h \
     mainwindow.h \
     musicselectwindow.h \
     playscene.h \
@@ -29,6 +31,7 @@ HEADERS += \
 
 FORMS += \
     difficultyandspeedselectwindow.ui \
+    gamewindow.ui \
     mainwindow.ui \
     playscene.ui \
     protutorialwidget.ui \

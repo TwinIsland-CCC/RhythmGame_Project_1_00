@@ -18,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
     //创建选择谱面窗体
     PlayScene* play = new PlayScene;
 
-
     //监听play中的back按钮，用于实现场景切换
     connect(play,&PlayScene::backbtnpushed,this,[=](){
         play->hide();
@@ -42,13 +41,13 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     //设置一张gif
-    movie.setFileName("C:/Users/CCC/Desktop/qt/RhythmGame_Project_1_00/testres/eveonecat1.gif");    //已经在类中声明了movie
+    movie.setFileName(":/test/eveonecat1.gif");//已经在类中声明了movie
     ui->label->setMovie(&movie);
     movie.start();
 
     //点击edit按钮显示对话框：此功能暂未开放！
     connect(ui->EditBtn,&QPushButton::clicked,this,[=](){
-        QMessageBox::information(this,"哦...","此功能暂未开放！");
+        QMessageBox::information(this,"哦...","此功能暂未开放！","好吧");
     });
 
 

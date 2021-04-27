@@ -29,7 +29,7 @@ PlayScene::PlayScene(QWidget *parent) :
     });
 
     //点击选歌栏中每一首歌，在背景里显示相应封面
-    //需求切换特效
+    //需求：切换特效
     connect(ui->toolButton,&QToolButton::clicked,this,[=](){
        QPixmap* pix = new QPixmap(":/test/faradise.jpg");
        ui->label->setPixmap(*pix);
@@ -47,6 +47,12 @@ PlayScene::PlayScene(QWidget *parent) :
     connect(ui->Playbtn,&QPushButton::clicked,this,[=](){
         this->hide();
         sele->show();
+    });
+
+    //监听dassw中的back按钮，用于实现场景切换
+    connect(sele,&DifficultyAndSpeedSelectWindow::backbtnpushed,this,[=](){
+        sele->hide();
+        this->show();
     });
 }
 

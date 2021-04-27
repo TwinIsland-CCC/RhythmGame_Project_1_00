@@ -109,7 +109,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QToolButton" name="toolButton">
+   <widget class="QToolButton" name="Playbtn">
     <property name="geometry">
      <rect>
       <x>340</x>
@@ -120,6 +120,19 @@
     </property>
     <property name="text">
      <string>开始玩！</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Backbtn">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Back</string>
     </property>
    </widget>
   </widget>

@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::DifficultyAndSpeedSelectWindow *ui;
+
+signals:
+    void backbtnpushed();
 };
 
 #endif // DIFFICULTYANDSPEEDSELECTWINDOW_H
