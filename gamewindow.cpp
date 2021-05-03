@@ -10,6 +10,10 @@ Gamewindow::Gamewindow(QWidget *parent) :
 
     //主要的游戏交互窗口
 
+    //游戏开始
+    //需求：写出音符下落模块
+
+
     //试行方案1：按下键时触发按钮，按钮再进行进一步判定
     //可以考虑给鼠标左右键加一下
     connect(this,&Gamewindow::Z_triggered,ui->Mainkey1,[=](){
@@ -22,17 +26,25 @@ Gamewindow::Gamewindow(QWidget *parent) :
     });
 
 
+
     connect(ui->Mainkey1,&QPushButton::clicked,[=](){
         qDebug()<<"key1被按下";
         //实现判定模块
+        //如果计时器没关着，检测到按键按下后计时器停止
+
 
 
     });
     connect(ui->Mainkey2,&QPushButton::clicked,[=](){
         qDebug()<<"key2被按下";
         //实现判定模块
+        //如果计时器没关着，检测到按键按下后计时器停止
+
 
     });
+
+    //预先为音符数组connect一下判定
+    //如果计时器没关着，检测到按键按下后计时器停止
 
 
 }

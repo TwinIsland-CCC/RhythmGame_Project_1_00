@@ -34,7 +34,8 @@
 #include<QTimer>
 #include<QVector>
 #include<QWidget>
-#include"note.h"
+#include "note.h"
+#include "data.h"
 
 using namespace std;
 
@@ -54,15 +55,28 @@ extern double your_potential;
 //每次将谱面游玩结束，会根据你的成绩和谱面定数计算出在本首曲子中你应得的ptt数。
 //具体计算方法有待确定
 
+extern QString nameofsong;    //选中的歌曲名字
+
+extern double BPM;
+
 extern int combo;
+
+extern double potential;
 
 extern QVector<Note*>Notes;//谱面的实现
 
 extern int key_num;//总音符个数
 
+extern int maxperfect_num;
+extern int perfect_num;
+extern int great_num;
+extern int miss_num;
+extern double tp;
+extern int highest_combo;
+extern double get_potential;
 
-
-
+extern QVector<rhythm>key_load;  //用于存储游戏时音符顺序
+extern QVector<archive>save_data;
 
 class source
 {

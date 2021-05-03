@@ -6,7 +6,10 @@
 #include "tutorialwindow.h"
 #include "playscene.h"
 #include <QDebug>
+#include <QMenu>
+#include <QAction>
 #include <QMessageBox>
+#include "source.h"
 #include "difficultyandspeedselectwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -17,6 +20,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     //创建选择谱面窗体
     PlayScene* play = new PlayScene;
+
+    //为ui添加背景音乐(一会再写)
+    QMediaPlayer *player = new QMediaPlayer(this);//设置背景音乐
+    //player->setMedia(QUrl::fromLocalFile(":/mus/music.mp3"));
+    player->setVolume(50);//音量
+    player->play();//开始播放，也可以用按钮的方式，这里用的是菜单栏中的action
+
 
     //监听play中的back按钮，用于实现场景切换
     connect(play,&PlayScene::backbtnpushed,this,[=](){
@@ -36,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //点击play按钮进入选取谱面界面
     connect(ui->PlayBtn,&QPushButton::clicked,this,[=](){
+        player->stop();
         this->hide();
         play->show();
     });
@@ -51,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
 
-    //新需求：左上角or状态栏显示用户名和ptt
+    //新需求：左上角和状态栏都显示用户名和ptt，并且在左上角显示头像
 
 
     //新需求：为第一次进入游戏的玩家弹出设置用户名窗口

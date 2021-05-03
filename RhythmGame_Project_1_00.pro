@@ -1,4 +1,5 @@
 QT       += core gui
+QT       += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,6 +15,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     musicselectwindow.cpp \
+    mythread.cpp \
     note.cpp \
     playscene.cpp \
     protutorialwidget.cpp \
@@ -21,10 +23,12 @@ SOURCES += \
     tutorialwindow.cpp
 
 HEADERS += \
+    data.h \
     difficultyandspeedselectwindow.h \
     gamewindow.h \
     mainwindow.h \
     musicselectwindow.h \
+    mythread.h \
     note.h \
     playscene.h \
     protutorialwidget.h \
@@ -45,6 +49,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
+    music/mus.qrc \
     testres/testres.qrc
 
 DISTFILES += \
