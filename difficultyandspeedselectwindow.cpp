@@ -10,8 +10,9 @@ DifficultyAndSpeedSelectWindow::DifficultyAndSpeedSelectWindow(QWidget *parent) 
 {
     ui->setupUi(this);
 
-    //创建主要游戏窗体
-    Gamewindow* game = new Gamewindow;
+
+
+
 
     //设置back按钮，以返回上一个页面
     connect(ui->Backbtn,&QPushButton::clicked,this,[=](){
@@ -19,13 +20,16 @@ DifficultyAndSpeedSelectWindow::DifficultyAndSpeedSelectWindow(QWidget *parent) 
     });
 
     connect(ui->Playbtn,&QToolButton::clicked,this,[=](){
+        //创建主要游戏窗体
+        Gamewindow* game = new Gamewindow;
         game->show();
+        game->init();
         this->hide();
     });
 
 
     //新需求：显示历史最高成绩以及评价
-
+    ui->bestLabel->setText("0");
 
 }
 

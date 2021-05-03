@@ -33,14 +33,21 @@ PlayScene::PlayScene(QWidget *parent) :
     connect(ui->toolButton,&QToolButton::clicked,this,[=](){
        QPixmap* pix = new QPixmap(":/test/faradise.jpg");
        ui->label->setPixmap(*pix);
+       nameofsong = ui->toolButton->text();
+       //qDebug()<<nameofsong;
     });
     connect(ui->toolButton_2,&QToolButton::clicked,this,[=](){
        QPixmap* pix = new QPixmap(":/test/sdorica.jpg");
        ui->label->setPixmap(*pix);
+       nameofsong = ui->toolButton_2->text();
+       //qDebug()<<nameofsong;
     });
     connect(ui->toolButton_3,&QToolButton::clicked,this,[=](){
        QPixmap* pix = new QPixmap(":/test/ANIMA.jpg");
        ui->label->setPixmap(*pix);
+       nameofsong = ui->toolButton_3->text();
+       //qDebug()<<nameofsong;
+
     });
 
     //点击选中那首歌以后，点击play进入难度选择、调速页面

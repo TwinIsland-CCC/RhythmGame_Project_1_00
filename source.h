@@ -59,6 +59,8 @@ extern QString nameofsong;    //选中的歌曲名字
 
 extern double BPM;
 
+extern int interval;//判定区间
+
 extern int combo;
 
 extern double potential;

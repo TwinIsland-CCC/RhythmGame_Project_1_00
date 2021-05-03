@@ -19,6 +19,7 @@ SOURCES += \
     note.cpp \
     playscene.cpp \
     protutorialwidget.cpp \
+    resultwidget.cpp \
     source.cpp \
     tutorialwindow.cpp
 
@@ -32,6 +33,7 @@ HEADERS += \
     note.h \
     playscene.h \
     protutorialwidget.h \
+    resultwidget.h \
     source.h \
     tutorialwindow.h
 
@@ -41,6 +43,7 @@ FORMS += \
     mainwindow.ui \
     playscene.ui \
     protutorialwidget.ui \
+    resultwidget.ui \
     tutorialwindow.ui
 
 # Default rules for deployment.

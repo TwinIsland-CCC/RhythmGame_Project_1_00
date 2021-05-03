@@ -16,6 +16,9 @@ QVector<Note*>Notes = {};//谱面的实现
 
 int key_num = 0;//总音符个数
 
+int interval = 100;//判定区间
+
+
 //初始化局内数据
 int maxperfect_num = 0;
 int perfect_num = 0;

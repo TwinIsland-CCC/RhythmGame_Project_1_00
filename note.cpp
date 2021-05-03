@@ -14,6 +14,6 @@ Note::Note(QWidget *parent,int interval) : QWidget(parent)
 
 void Note::judgetrigggered()
 {
-
-
+    judge->elapsed();
+    //int remainingtime = interval-judge.elapsed();
 }

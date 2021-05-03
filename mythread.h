@@ -17,6 +17,7 @@ public slots:
     void load_song();
     void load_save();
     void keep_save();
+    void calculate_judge();
 signals:
     void load_widget_signal();
     void load_song_finsh();

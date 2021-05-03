@@ -87,3 +87,10 @@ void mythread::keep_save()
         save_file.close();
     }
 }
+
+void mythread::calculate_judge()
+{
+
+
+
+}
