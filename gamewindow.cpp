@@ -9,30 +9,30 @@ Gamewindow::Gamewindow(QWidget *parent) :
     ui(new Ui::Gamewindow)
 {
     ui->setupUi(this);
-
+    qDebug()<<"I am main Thread, my ID:"<<QThread::currentThreadId()<<"\n";
 
     //试行方案1：按下键时触发按钮，按钮再进行进一步判定
     //可以考虑给鼠标左右键加一下
     connect(this,&Gamewindow::Z_triggered,ui->Mainkey1,[=](){
-        qDebug()<<"Z被按下";
+        //qDebug()<<"Z被按下";
         emit ui->Mainkey1->clicked();
     });
     connect(this,&Gamewindow::X_triggered,ui->Mainkey2,[=](){
-        qDebug()<<"X被按下";
+        //qDebug()<<"X被按下";
         emit ui->Mainkey2->clicked();
     });
 
 
 
     connect(ui->Mainkey1,&QPushButton::clicked,[=](){
-        qDebug()<<"key1被按下";
+        //qDebug()<<"key1被按下";
         //实现判定模块
         //如果计时器没关着，检测到按键按下后计时器停止
 
 
     });
     connect(ui->Mainkey2,&QPushButton::clicked,[=](){
-        qDebug()<<"key2被按下";
+        //qDebug()<<"key2被按下";
         //实现判定模块
         //如果计时器没关着，检测到按键按下后计时器停止
 
@@ -70,20 +70,64 @@ void Gamewindow::init(){
     //整体的判定
     //游戏开始
 
+    //测试
+    QVector<Note*>Notestest = {};
+    QElapsedTimer* timer = new QElapsedTimer;
+    Note* dot = new Note(this,":/test/nku.png",100,0);
+    Notestest.push_back(dot);
+
 
     //需求：写出音符下落模块
-    int song_length = 0;//通过文件读取歌曲长度（待实现）
+    int song_length = 2000;//通过文件读取歌曲长度（待实现）
     int i = 0;//第i个音符
     int remaining_length = song_length;
+
+
+
     connect(ui->Mainkey1,&QPushButton::clicked,[=](){
-        qDebug()<<"key1被按下";
+        qDebug()<<"key1被按下2";
         //实现判定模块
         //如果计时器没关着，检测到按键按下后计时器停止
-        if(Notes[i]->judge->isValid())
+//调试用代码
+//        bool flag = Notestest[i]->judge.isValid();
+//        qDebug()<<flag;
+        if(Notestest[i]->judge.isValid())
         {
-            if(!(Notes[i]->type))
+            //qDebug()<<"timer活着的";
+            if(!(Notestest[i]->type))
             {
-
+                qDebug()<<"音符在左边";
+                //按对了就启动判定
+                int remain = interval - Notestest[i]->judge.elapsed();
+                if(remain > 0 && remain <= 50 | remain > 150 && remain < 200)
+                {
+                    qDebug()<<remain<<" "<<"great";
+                    Notestest[i]->been_judged = true;
+                    emit Notestest[i]->great();
+                }
+                else if(remain > 50 && remain <= 75 | remain > 125 && remain <= 150)
+                {
+                    qDebug()<<remain<<" "<<"perfect";
+                    Notestest[i]->been_judged = true;
+                    emit Notestest[i]->perfect();
+                }
+                else if(remain > 75 && remain <= 125)
+                {
+                    qDebug()<<remain<<" "<<"max perfect";
+                    Notestest[i]->been_judged = true;
+                    emit Notestest[i]->maxperfect();
+                }
+                else
+                {
+                    qDebug()<<remain<<" "<<"miss";
+                    Notestest[i]->been_judged = true;
+                    emit Notestest[i]->miss();
+                }
+            }
+            else
+            {
+                qDebug()<<"音符在右边，你按反了";
+                //按反了就什么也不做
             }
         }
         else
@@ -92,42 +136,91 @@ void Gamewindow::init(){
         }
     });
     connect(ui->Mainkey2,&QPushButton::clicked,[=](){
-        qDebug()<<"key2被按下";
+        qDebug()<<"key2被按下2";
         //实现判定模块
         //如果计时器没关着，检测到按键按下后计时器停止
-
-
-    });
-    coun->start();
-    while(remaining_length)
-    {
-        if(Notes[i]->note_start_time == coun->elapsed())
+        if(Notestest[i]->judge.isValid())
         {
-            //实现：使音符下落
-
-
-            //让音符开始判定计时，完成判定模块
-            Notes[i]->judge->start();
-            //需求：当开始之后时间经过100ms时让这个音符的judge变为invalid
-
-
-            //下一个音符
-            i++;
+            //qDebug()<<"timer活着的";
+            if(Notestest[i]->type)
+            {
+                qDebug()<<"音符在右边";
+                //按对了就启动判定
+                int remain = interval - Notestest[i]->judge.elapsed();
+                if(remain > 0 && remain <= 50 | remain > 150 && remain < 200)
+                {
+                    qDebug()<<remain<<" "<<"great";
+                    Notestest[i]->been_judged = true;
+                    emit Notestest[i]->great();
+                }
+                else if(remain > 50 && remain <= 75 | remain > 125 && remain <= 150)
+                {
+                    qDebug()<<remain<<" "<<"perfect";
+                    Notestest[i]->been_judged = true;
+                    emit Notestest[i]->perfect();
+                }
+                else if(remain > 75 && remain <= 125)
+                {
+                    qDebug()<<remain<<" "<<"max perfect";
+                    Notestest[i]->been_judged = true;
+                    emit Notestest[i]->maxperfect();
+                }
+                else
+                {
+                    qDebug()<<remain<<" "<<"miss";
+                    Notestest[i]->been_judged = true;
+                    emit Notestest[i]->miss();
+                }
+            }
+            else
+            {
+                qDebug()<<"音符在左边，你按反了";
+                //按反了就什么也不做
+            }
         }
         else
         {
-            qDebug()<<"err";
+            qDebug()<<"你按的太早了，音符还没下来，或者你按的太晚了，音符都跑了";
         }
 
-        remaining_length = song_length - coun->elapsed();
+    });
 
-    }
+
+    coun->start();
+
+    //Notestest[i]->judge.start();
+
+    //线程
+//    while(remaining_length)
+//    {
+////        if(Notestest[i]->note_start_time == coun->elapsed())
+////        {
+////            //实现：使音符下落
+
+
+////            //让音符开始判定计时，完成判定模块
+////            Notestest[i]->judge->start();
+////            //需求：当开始之后时间经过100ms时让这个音符的judge变为invalid
+
+
+////            //下一个音符
+////            i++;
+////        }
+////        else
+////        {
+////            qDebug()<<"err";
+////        }
+
+//        remaining_length = song_length - coun->elapsed();
+
+//    }
 
 
     QEventLoop eventloop;
     QTimer::singleShot(1000, &eventloop, SLOT(quit()));
     //qDebug()<<"1s";
     eventloop.exec();//打完歌以后暂停1s，开启贤者模式（不是
+    coun->invalidate();
     emit Game_Over();
     //qDebug()<<"emitted";
 }
@@ -136,30 +229,30 @@ void Gamewindow::keyPressEvent(QKeyEvent *event)
 {
     if(!event->isAutoRepeat())
     {
-        qDebug()<<"press";
+        //qDebug()<<"press";
         switch(event->key())
         {//Z和V为一判定，X和C为一判定
         case Qt::Key_Z:
             //特效
-            qDebug()<<"press  z";
+            //qDebug()<<"press  z";
             emit Z_triggered();
             break;
 
         case Qt::Key_V:
             //特效
-            qDebug()<<"press  v";
+            //qDebug()<<"press  v";
             emit Z_triggered();
             break;
 
         case Qt::Key_X:
             //特效
-            qDebug()<<"press  x";
+            //qDebug()<<"press  x";
             emit X_triggered();
             break;
 
         case Qt::Key_C:
             //特效
-            qDebug()<<"press  c";
+            //qDebug()<<"press  c";
             emit X_triggered();
             break;
 
@@ -172,7 +265,7 @@ void Gamewindow::keyReleaseEvent(QKeyEvent *event)
 {
     if(!event->isAutoRepeat())
     {
-        qDebug()<<"release";
+        //qDebug()<<"release";
     }
 }
 

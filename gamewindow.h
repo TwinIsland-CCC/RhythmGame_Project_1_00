@@ -2,6 +2,7 @@
 #define GAMEWINDOW_H
 
 #include <QMainWindow>
+#include <QElapsedTimer>
 #include "source.h"
 
 namespace Ui {
