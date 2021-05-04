@@ -10,6 +10,7 @@
 #include <QAction>
 #include <QMessageBox>
 #include "source.h"
+#include "optionwindow.h"
 #include "difficultyandspeedselectwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -20,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //创建选择谱面窗体
     PlayScene* play = new PlayScene;
+    OptionWindow* option = new OptionWindow;
 
     //为ui添加背景音乐(一会再写)
     QMediaPlayer *player = new QMediaPlayer(this);//设置背景音乐
@@ -28,9 +30,19 @@ MainWindow::MainWindow(QWidget *parent)
     player->play();//开始播放，也可以用按钮的方式，这里用的是菜单栏中的action
 
 
-    //监听play中的back按钮，用于实现场景切换
+    //监听各种back按钮，用于实现场景切换
     connect(play,&PlayScene::backbtnpushed,this,[=](){
         play->hide();
+        this->show();
+    });
+
+    connect(option,&OptionWindow::FinishBtnpushed,this,[=](){
+        option->hide();
+        this->show();
+    });
+
+    connect(option,&OptionWindow::CancelBtnpushed,this,[=](){
+        option->hide();
         this->show();
     });
 
@@ -64,12 +76,24 @@ MainWindow::MainWindow(QWidget *parent)
 
     //新需求：左上角和状态栏都显示用户名和ptt，并且在左上角显示头像
 
+    QLabel* statuslabel = new QLabel;
+    ui->statusBar->addPermanentWidget(statuslabel);
+    QString statusbartext = "欢迎，";
+    statusbartext+=user_name;
+    statusbartext+="！您的potential是：";
+    statusbartext+=QString::number(your_potential);
+    statuslabel->setText(statusbartext);
 
+    ui->NameLabel->setText(user_name);
+    ui->PttLabel->setText(QString::number(your_potential));
     //新需求：为第一次进入游戏的玩家弹出设置用户名窗口
 
 
     //新需求：在option中提供更改用户名界面，提供名片界面（选）
-
+    connect(ui->OptionBtn,&QPushButton::clicked,[=](){
+        option->show();
+        this->hide();
+    });
 
 }
 

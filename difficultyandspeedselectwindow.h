@@ -14,12 +14,14 @@ class DifficultyAndSpeedSelectWindow : public QMainWindow
 public:
     explicit DifficultyAndSpeedSelectWindow(QWidget *parent = nullptr);
     ~DifficultyAndSpeedSelectWindow();
+    void init();
 
 private:
     Ui::DifficultyAndSpeedSelectWindow *ui;
 
 signals:
     void backbtnpushed();
+    void Re_Select();
 };
 
 #endif // DIFFICULTYANDSPEEDSELECTWINDOW_H

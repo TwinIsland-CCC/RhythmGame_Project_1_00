@@ -1,5 +1,7 @@
 #include "source.h"
 
+QString user_name = "CCC";
+
 QString nameofsong = "";    //选中的歌曲名字
 
 double your_result = 0;//初始化成绩
@@ -13,6 +15,8 @@ int combo = 0;//初始化连击数
 double potential = 0;//初始化歌曲ptt
 
 QVector<Note*>Notes = {};//谱面的实现
+
+int level = 0;
 
 int key_num = 0;//总音符个数
 

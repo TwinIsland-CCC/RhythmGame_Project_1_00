@@ -40,6 +40,8 @@
 
 using namespace std;
 
+extern QString user_name;
+
 const int numofsong = 3;
 
 extern double your_result;
@@ -55,6 +57,8 @@ extern double your_potential;
 //potential计算机制：
 //每次将谱面游玩结束，会根据你的成绩和谱面定数计算出在本首曲子中你应得的ptt数。
 //具体计算方法有待确定
+
+extern int level;
 
 extern QString nameofsong;    //选中的歌曲名字
 

@@ -14,6 +14,14 @@ PlayScene::PlayScene(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QLabel* statuslabel = new QLabel;
+    ui->statusBar->addPermanentWidget(statuslabel);
+    QString statusbartext = "欢迎，";
+    statusbartext+=user_name;
+    statusbartext+="！您的potential是：";
+    statusbartext+=QString::number(your_potential);
+    statuslabel->setText(statusbartext);
+
     //创建选择难度、速度窗体
     DifficultyAndSpeedSelectWindow* sele = new DifficultyAndSpeedSelectWindow;
 
@@ -34,7 +42,7 @@ PlayScene::PlayScene(QWidget *parent) :
        QPixmap* pix = new QPixmap(":/test/faradise.jpg");
        ui->label->setPixmap(*pix);
        nameofsong = ui->toolButton->text();
-       //qDebug()<<nameofsong;
+       qDebug()<<nameofsong;
     });
     connect(ui->toolButton_2,&QToolButton::clicked,this,[=](){
        QPixmap* pix = new QPixmap(":/test/sdorica.jpg");
@@ -53,6 +61,7 @@ PlayScene::PlayScene(QWidget *parent) :
     //点击选中那首歌以后，点击play进入难度选择、调速页面
     connect(ui->Playbtn,&QPushButton::clicked,this,[=](){
         this->hide();
+        sele->init();
         sele->show();
     });
 
@@ -61,6 +70,11 @@ PlayScene::PlayScene(QWidget *parent) :
         sele->hide();
         this->show();
     });
+
+    connect(sele,&DifficultyAndSpeedSelectWindow::Re_Select,[=](){
+        this->show();
+    });
+
 }
 
 PlayScene::~PlayScene()

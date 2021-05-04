@@ -2,6 +2,7 @@
 #define RESULTWIDGET_H
 
 #include <QMainWindow>
+#include "source.h"
 
 namespace Ui {
 class ResultWidget;
@@ -14,6 +15,9 @@ class ResultWidget : public QMainWindow
 public:
     explicit ResultWidget(QWidget *parent = nullptr);
     ~ResultWidget();
+
+signals:
+    void ContinueBtnpushed();
 
 private:
     Ui::ResultWidget *ui;

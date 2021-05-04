@@ -59,6 +59,11 @@ void Gamewindow::init(){
         res->show();
     });
 
+    //监听result中的Continue按钮，用于实现场景切换
+    connect(res,&ResultWidget::ContinueBtnpushed,[=](){
+        res->close();
+        emit Game_Over();
+    });
 
     //创建线程
     mythread* jud = new mythread();//为判定创建线程
@@ -91,6 +96,7 @@ void Gamewindow::init(){
 //调试用代码
 //        bool flag = Notestest[i]->judge.isValid();
 //        qDebug()<<flag;
+
         if(Notestest[i]->judge.isValid())
         {
             //qDebug()<<"timer活着的";
@@ -135,6 +141,7 @@ void Gamewindow::init(){
             qDebug()<<"你按的太早了，音符还没下来，或者你按的太晚了，音符都跑了";
         }
     });
+
     connect(ui->Mainkey2,&QPushButton::clicked,[=](){
         qDebug()<<"key2被按下2";
         //实现判定模块
