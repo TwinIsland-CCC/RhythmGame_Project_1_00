@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QElapsedTimer>
 #include "source.h"
+#include "note.h"
 
 namespace Ui {
 class Gamewindow;
@@ -18,6 +19,9 @@ public:
     void init();
     ~Gamewindow();
     QThread judgethread;
+    int song_length;
+    int i;//第i个音符
+    int remaining_length;
 
 signals:
     void Z_triggered();

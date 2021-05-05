@@ -1,8 +1,9 @@
 <RCC>
     <qresource prefix="/mus">
-        <file>music.mp3</file>
-        <file>paradise.mp3</file>
-        <file>the story unfolds.mp3</file>
-        <file>test.mp3</file>
+        <file>test.wav</file>
+        <file>music.wav</file>
+        <file>paradise.wav</file>
+        <file>the story unfolds.wav</file>
+        <file>result.ogg</file>
     </qresource>
 </RCC>

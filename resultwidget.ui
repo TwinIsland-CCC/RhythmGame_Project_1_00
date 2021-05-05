@@ -43,11 +43,11 @@
      <string>Continue</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="SongNameLabel">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>40</y>
+      <x>360</x>
+      <y>60</y>
       <width>72</width>
       <height>15</height>
      </rect>
@@ -56,20 +56,7 @@
      <string>TextLabel</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>160</y>
-      <width>72</width>
-      <height>15</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="PictureLabel">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -81,12 +68,131 @@
     <property name="text">
      <string>TextLabel</string>
     </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>340</y>
+      <x>10</x>
+      <y>20</y>
+      <width>211</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Inf</string>
+    </property>
+    <widget class="QLabel" name="PttLabel">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>60</y>
+       <width>72</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="NameLabel">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>30</y>
+       <width>72</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="IconLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>61</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="testres/testres.qrc">:/test/icon1.jpg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>350</y>
+      <width>111</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Detail:</string>
+    </property>
+    <widget class="QLabel" name="PerfectLabel">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>72</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="GreatLabel">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>80</y>
+       <width>72</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="MissLabel">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>120</y>
+       <width>72</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="ScoreLabel">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>160</y>
       <width>72</width>
       <height>15</height>
      </rect>
@@ -95,24 +201,11 @@
      <string>TextLabel</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="LevelLabel">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>400</y>
-      <width>72</width>
-      <height>15</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>460</y>
+      <x>360</x>
+      <y>270</y>
       <width>72</width>
       <height>15</height>
      </rect>

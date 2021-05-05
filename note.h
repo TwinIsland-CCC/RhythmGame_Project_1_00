@@ -5,6 +5,7 @@
 #include <QElapsedTimer>
 #include <QTime>
 #include <QDebug>
+#include "source.h"
 
 class Note : public QWidget
 {

@@ -14,8 +14,9 @@ class ResultWidget : public QMainWindow
 
 public:
     explicit ResultWidget(QWidget *parent = nullptr);
+    void init();
     ~ResultWidget();
-
+    QMediaPlayer* player;
 signals:
     void ContinueBtnpushed();
 

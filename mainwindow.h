@@ -5,6 +5,8 @@
 #include <QMovie>
 #include "tutorialwindow.h"
 #include "protutorialwidget.h"
+#include "source.h"
+#include <QMediaPlayer>
 #include "playscene.h"
 
 QT_BEGIN_NAMESPACE
@@ -24,6 +26,7 @@ private:
     tutorialwindow tutorial1;
     protutorialwidget tutorial2;
     QMovie movie;
+    QMediaPlayer *player;
 
 };
 #endif // MAINWINDOW_H

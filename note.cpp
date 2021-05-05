@@ -8,6 +8,25 @@ Note::Note(QWidget *parent) : QWidget(parent)
     //如果计时器没关着，检测到按键按下后计时器停止
     //int remainingtime = interval-judge.elapsed();
 
+//    connect(this,&Note::miss,[=]()//实现判定加分
+//    {
+//        been_judged = true;
+//    });
+//    connect(this,&Note::great,[=]()
+//    {
+//        get_score += (score_per_note / 2);
+//        been_judged = true;
+//    });
+//    connect(this,&Note::perfect,[=]()
+//    {
+//        get_score += score_per_note;
+//        been_judged = true;
+//    });
+//    connect(this,&Note::maxperfect,[=]()
+//    {
+//        get_score += (score_per_note + 1);
+//        been_judged = true;
+//    });
 
 }
 

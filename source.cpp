@@ -18,7 +18,7 @@ QVector<Note*>Notes = {};//谱面的实现
 
 int level = 0;
 
-int key_num = 0;//总音符个数
+int key_num = 1;//总音符个数
 
 int interval = 200;//判定区间
 
@@ -28,8 +28,11 @@ int maxperfect_num = 0;
 int perfect_num = 0;
 int great_num = 0;
 int miss_num = 0;
-double accuray_num = 0;
+double tp = 0;
+double score_per_note = 0;
 int highest_combo = 0;
+int get_score = 0;
+QString get_level = "";
 double get_potential = 0;//初始化获得的ptt
 
 QVector<archive>save_data = {};//初始化存档数据

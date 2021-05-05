@@ -24,8 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
     OptionWindow* option = new OptionWindow;
 
     //为ui添加背景音乐(一会再写)
-    QMediaPlayer *player = new QMediaPlayer(this);//设置背景音乐
-    //player->setMedia(QUrl::fromLocalFile(":/mus/music.mp3"));
+    player = new QMediaPlayer;//设置背景音乐
+    player->setMedia(QUrl("qrc:/mus/music.wav"));
     player->setVolume(50);//音量
     player->play();//开始播放，也可以用按钮的方式，这里用的是菜单栏中的action
 
