@@ -6,4 +6,9 @@
         <file>the story unfolds.wav</file>
         <file>result.ogg</file>
     </qresource>
+    <qresource prefix="/mus/preview">
+        <file>preview/paradise_preview_BPM126.mp3</file>
+        <file>preview/test_preview_BPM130.wav</file>
+        <file>preview/the story unfolds_preview_120.124BPM.mp3</file>
+    </qresource>
 </RCC>

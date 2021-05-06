@@ -56,7 +56,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     music/mus.qrc \
-    testres/testres.qrc
+    testres/testres.qrc \
+    video.qrc
 
 DISTFILES += \
     music/Sdorica ''the  Story Unfolds'' - Hoskey, RayRay.mp3 \

@@ -22,7 +22,10 @@ ResultWidget::ResultWidget(QWidget *parent) :
 
     //当游戏结束后出现此窗口，并播放BGM
     player = new QMediaPlayer;
-    player->setMedia(QUrl("qrc:/mus/result.ogg"));
+    QMediaPlaylist* list = new QMediaPlaylist;
+    list->addMedia(QUrl("qrc:/mus/result.ogg"));
+    list->setPlaybackMode(QMediaPlaylist::Loop);
+    player->setPlaylist(list);
     player->setVolume(50);//音量
 
 

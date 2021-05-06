@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/vid">
+        <file>vid/intro.mp4</file>
+    </qresource>
+</RCC>

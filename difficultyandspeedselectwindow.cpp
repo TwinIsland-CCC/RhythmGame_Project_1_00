@@ -20,6 +20,7 @@ DifficultyAndSpeedSelectWindow::DifficultyAndSpeedSelectWindow(QWidget *parent) 
 
     connect(ui->Playbtn,&QToolButton::clicked,this,[=](){
         //创建主要游戏窗体
+        emit Music_Stop();//让preview停止
         this->hide();
         Gamewindow* game = new Gamewindow;
         game->show();

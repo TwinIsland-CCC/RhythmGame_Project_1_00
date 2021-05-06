@@ -2,6 +2,8 @@
 #define PLAYSCENE_H
 
 #include <QMainWindow>
+#include <QMediaPlayer>
+#include "source.h"
 
 namespace Ui {
 class PlayScene;
@@ -14,6 +16,7 @@ class PlayScene : public QMainWindow
 public:
     explicit PlayScene(QWidget *parent = nullptr);
     ~PlayScene();
+    QMediaPlayer* preview;
 
 private:
     Ui::PlayScene *ui;

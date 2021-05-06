@@ -25,13 +25,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     //为ui添加背景音乐(一会再写)
     player = new QMediaPlayer;//设置背景音乐
-    player->setMedia(QUrl("qrc:/mus/music.wav"));
+    QMediaPlaylist* list = new QMediaPlaylist;
+    list->addMedia(QUrl("qrc:/mus/music.wav"));
+    list->setPlaybackMode(QMediaPlaylist::Loop);
+    player->setPlaylist(list);
     player->setVolume(50);//音量
     player->play();//开始播放，也可以用按钮的方式，这里用的是菜单栏中的action
 
 
     //监听各种back按钮，用于实现场景切换
     connect(play,&PlayScene::backbtnpushed,this,[=](){
+        player->play();
         play->hide();
         this->show();
     });
@@ -58,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //点击play按钮进入选取谱面界面
     connect(ui->PlayBtn,&QPushButton::clicked,this,[=](){
-        player->stop();
+        player->pause();
         this->hide();
         play->show();
     });

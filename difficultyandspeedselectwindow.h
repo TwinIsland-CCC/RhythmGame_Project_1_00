@@ -22,6 +22,7 @@ private:
 signals:
     void backbtnpushed();
     void Re_Select();
+    void Music_Stop();
 };
 
 #endif // DIFFICULTYANDSPEEDSELECTWINDOW_H
