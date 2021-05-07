@@ -15,9 +15,12 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     musicselectwindow.cpp \
+    mylabel.cpp \
     mythread.cpp \
+    newroom.cpp \
     note.cpp \
     optionwindow.cpp \
+    pausewindow.cpp \
     playscene.cpp \
     protutorialwidget.cpp \
     resultwidget.cpp \
@@ -30,9 +33,12 @@ HEADERS += \
     gamewindow.h \
     mainwindow.h \
     musicselectwindow.h \
+    mylabel.h \
     mythread.h \
+    newroom.h \
     note.h \
     optionwindow.h \
+    pausewindow.h \
     playscene.h \
     protutorialwidget.h \
     resultwidget.h \
@@ -43,7 +49,9 @@ FORMS += \
     difficultyandspeedselectwindow.ui \
     gamewindow.ui \
     mainwindow.ui \
+    newroom.ui \
     optionwindow.ui \
+    pausewindow.ui \
     playscene.ui \
     protutorialwidget.ui \
     resultwidget.ui \

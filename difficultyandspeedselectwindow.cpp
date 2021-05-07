@@ -12,7 +12,6 @@ DifficultyAndSpeedSelectWindow::DifficultyAndSpeedSelectWindow(QWidget *parent) 
 
 
 
-
     //设置back按钮，以返回上一个页面
     connect(ui->Backbtn,&QPushButton::clicked,this,[=](){
         emit this->backbtnpushed();
@@ -40,6 +39,17 @@ DifficultyAndSpeedSelectWindow::DifficultyAndSpeedSelectWindow(QWidget *parent) 
         qDebug()<<level;
     });
 
+
+    //线程
+    loadthread =new QThread(this);
+    myload=new mythread;
+    myload->moveToThread(loadthread);
+    loadthread->start();
+
+    connect(ui->Playbtn,&QPushButton::clicked,myload,&mythread::load_song);
+
+
+
     //新需求：显示历史最高成绩以及评价
     ui->bestLabel->setText("0");
 
@@ -53,5 +63,9 @@ void DifficultyAndSpeedSelectWindow::init()
 
 DifficultyAndSpeedSelectWindow::~DifficultyAndSpeedSelectWindow()
 {
+    loadthread->quit();
+    loadthread->wait();
     delete ui;
 }
+
+

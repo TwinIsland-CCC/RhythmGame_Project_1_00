@@ -2,6 +2,8 @@
 #define DIFFICULTYANDSPEEDSELECTWINDOW_H
 
 #include <QMainWindow>
+#include "source.h"
+#include "mythread.h"
 
 namespace Ui {
 class DifficultyAndSpeedSelectWindow;
@@ -15,6 +17,8 @@ public:
     explicit DifficultyAndSpeedSelectWindow(QWidget *parent = nullptr);
     ~DifficultyAndSpeedSelectWindow();
     void init();
+    QThread* loadthread;
+    mythread* myload;
 
 private:
     Ui::DifficultyAndSpeedSelectWindow *ui;

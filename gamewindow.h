@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QElapsedTimer>
+#include "pausewindow.h"
 #include "source.h"
 #include "note.h"
 
@@ -19,9 +20,14 @@ public:
     void init();
     ~Gamewindow();
     QThread judgethread;
+    QMovie movie;
+    QMediaPlayer* meow;
+    QMediaPlayer* player = new QMediaPlayer;
+    QTimer* bgtimer = new QTimer(this);
     int song_length;
     int i;//第i个音符
     int remaining_length;
+    int current = 0;
 
 signals:
     void Z_triggered();

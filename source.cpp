@@ -4,6 +4,8 @@ QString user_name = "CCC";
 
 QString nameofsong = "";    //选中的歌曲名字
 
+bool new_or_old = true;//true为新手，默认为true
+
 double your_result = 0;//初始化成绩
 
 double your_potential = 0;//初始化ptt

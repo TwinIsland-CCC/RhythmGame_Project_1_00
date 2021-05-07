@@ -45,7 +45,7 @@
       <property name="styleSheet">
        <string notr="true"/>
       </property>
-      <widget class="QLabel" name="label">
+      <widget class="mylabel" name="label">
        <property name="geometry">
         <rect>
          <x>510</x>
@@ -53,6 +53,12 @@
          <width>71</width>
          <height>61</height>
         </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>OpenHandCursor</cursorShape>
+       </property>
+       <property name="mouseTracking">
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>123</string>
@@ -244,6 +250,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>mylabel</class>
+   <extends>QLabel</extends>
+   <header>mylabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="testres/testres.qrc"/>
  </resources>

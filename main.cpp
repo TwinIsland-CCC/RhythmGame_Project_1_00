@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-
 #include <QApplication>
 #include <QSplashScreen>
 #include <QThread>
@@ -9,7 +8,6 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
 
     //开场动画（暂用校徽）
     QPixmap pix(":/test/nku.png");
@@ -17,7 +15,18 @@ int main(int argc, char *argv[])
     splash->show();
     QThread::sleep(1);
 
+//    if(new_or_old)
+//    {
+//        NewRoom* ro = new NewRoom;
+//        ro->setWindowModality(Qt::ApplicationModal);
+//        ro->show();
+//    }
+    MainWindow w;
     w.show();
+
+
+
+
 
     splash->finish(&w);
     delete splash;

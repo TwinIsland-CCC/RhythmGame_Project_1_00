@@ -38,6 +38,8 @@
 
 #include "note.h"
 #include "data.h"
+#include "mylabel.h"
+#include "newroom.h"
 
 class Note;
 
@@ -47,7 +49,7 @@ extern QString user_name;
 
 const int numofsong = 3;
 
-
+extern bool new_or_old;
 
 
 extern double your_potential;

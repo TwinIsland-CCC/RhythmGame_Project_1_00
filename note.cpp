@@ -38,11 +38,22 @@ Note::Note(QWidget *parent) : QWidget(parent)
 
 //}
 
-Note::Note(QWidget *parent,QString img,double start_time,int typ)
-: QWidget(parent),image(img),note_start_time(start_time),type(typ)
+Note::Note(QWidget *parent,char typ,double start_time,QString img)
+: QWidget(parent),note_start_time(start_time),type(typ)
 {
+    if(typ ==  'Z' || typ == 'V')
+    {
+        image = ":/key/key/key1.png";
 
+    }
+    else if(typ ==  'X' || typ == 'C')
+    {
+        image = ":/key/key/key2.png";
+    }
+    else
+    {
 
+    }
 
 }
 

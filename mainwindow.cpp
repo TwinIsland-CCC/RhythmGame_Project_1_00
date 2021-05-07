@@ -23,6 +23,12 @@ MainWindow::MainWindow(QWidget *parent)
     PlayScene* play = new PlayScene;
     OptionWindow* option = new OptionWindow;
 
+//    if(new_or_old)
+//    {
+//        NewRoom* ro = new NewRoom;
+//        ro->show();
+//    }
+
     //为ui添加背景音乐(一会再写)
     player = new QMediaPlayer;//设置背景音乐
     QMediaPlaylist* list = new QMediaPlaylist;
@@ -32,6 +38,16 @@ MainWindow::MainWindow(QWidget *parent)
     player->setVolume(50);//音量
     player->play();//开始播放，也可以用按钮的方式，这里用的是菜单栏中的action
 
+    meow = new QMediaPlayer;
+    QMediaPlaylist* list2 = new QMediaPlaylist;
+    list2->addMedia(QUrl("qrc:/mus/sounds/sounds/meow.mp3"));
+    list2->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
+    meow->setPlaylist(list2);
+    meow->setVolume(100);
+    connect(ui->label,&mylabel::clicked,[=](){
+        meow->stop();
+        meow->play();
+    });
 
     //监听各种back按钮，用于实现场景切换
     connect(play,&PlayScene::backbtnpushed,this,[=](){
@@ -74,7 +90,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //点击edit按钮显示对话框：此功能暂未开放！
     connect(ui->EditBtn,&QPushButton::clicked,this,[=](){
-        QMessageBox::information(this,"哦...","此功能暂未开放！","好吧");
+        QMessageBox::information(this,"哦...","如果你想编辑你自己的谱面，请去qmk的github下下载谱面编辑器，里面有配套的教程哟~","好吧");
     });
 
 
@@ -90,7 +106,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->NameLabel->setText(user_name);
     ui->PttLabel->setText(QString::number(your_potential));
-    //新需求：为第一次进入游戏的玩家弹出设置用户名窗口
+    //新需求：为第一次进入游戏的玩家弹出设置用户名对话框
 
 
     //新需求：在option中提供更改用户名界面，提供名片界面（选）
@@ -99,10 +115,20 @@ MainWindow::MainWindow(QWidget *parent)
         this->hide();
     });
 
+    init = new mythread;
+    initthread = new QThread(this);
+    init->moveToThread(initthread);
+    initthread->start();
+
+    connect(ui->PlayBtn,&QPushButton::clicked,init,&mythread::load_save);
+    //connect(init,&mythread::load_widget_signal,this,&Widget::DealLoadWidget);
+    connect(ui->ExitBtn,&QPushButton::clicked,init,&mythread::keep_save);
 }
 
 MainWindow::~MainWindow()
 {
+    initthread->quit();
+    initthread->wait();
     delete ui;
 }
 

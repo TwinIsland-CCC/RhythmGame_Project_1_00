@@ -90,8 +90,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Sdorica “the  Story Unfolds”
- - Hoskey, RayRay</string>
+       <string>the story unfolds</string>
       </property>
      </widget>
      <widget class="QToolButton" name="toolButton">
@@ -104,7 +103,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Paradise - Sound Souler</string>
+       <string>paradise</string>
       </property>
      </widget>
     </widget>

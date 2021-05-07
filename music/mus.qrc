@@ -11,4 +11,7 @@
         <file>preview/test_preview_BPM130.wav</file>
         <file>preview/the story unfolds_preview_120.124BPM.mp3</file>
     </qresource>
+    <qresource prefix="/mus/sounds">
+        <file>sounds/meow.mp3</file>
+    </qresource>
 </RCC>

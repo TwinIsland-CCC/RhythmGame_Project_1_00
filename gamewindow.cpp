@@ -42,6 +42,37 @@ Gamewindow::Gamewindow(QWidget *parent) :
     //预先为音符数组connect一下判定
     //如果计时器没关着，检测到按键按下后计时器停止
 
+    connect(ui->PauseBtn,&QPushButton::clicked,[=](){
+        bgtimer->stop();
+        player->pause();
+        PauseWindow* paus = new PauseWindow;
+        paus->setWindowModality(Qt::ApplicationModal);
+        paus->show();
+        connect(paus,&PauseWindow::game_continue,[=](){
+            player->play();
+            bgtimer->start(1);
+            paus->close();
+        });
+        ////restart和exit一会再写
+
+
+    });
+
+    movie.setFileName(":/test/cat2.gif");//已经在类中声明了movie
+    ui->label->setMovie(&movie);
+    movie.start();
+
+    meow = new QMediaPlayer;
+    QMediaPlaylist* list2 = new QMediaPlaylist;
+    list2->addMedia(QUrl("qrc:/mus/sounds/sounds/meow.mp3"));
+    list2->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
+    meow->setPlaylist(list2);
+    meow->setVolume(100);
+    connect(ui->label,&mylabel::clicked,[=](){
+        meow->stop();
+        meow->play();
+    });
+
 
 
 }
@@ -49,9 +80,10 @@ Gamewindow::Gamewindow(QWidget *parent) :
 void Gamewindow::init(){
     //创建成绩窗口
     ResultWidget* res = new ResultWidget();
+    res->setWindowModality(Qt::ApplicationModal);
 
     //主要的游戏交互窗口
-    QElapsedTimer* coun = new QElapsedTimer();
+    //QElapsedTimer* coun = new QElapsedTimer();
 
     //结束以后显示成绩
     connect(this,&Gamewindow::Game_Over,[=](){
@@ -68,7 +100,7 @@ void Gamewindow::init(){
     //创建线程
     mythread* jud = new mythread();//为判定创建线程
     jud->moveToThread(&judgethread);
-
+    judgethread.start();
 
 
 
@@ -77,8 +109,8 @@ void Gamewindow::init(){
 
     //测试
     QVector<Note*>Notestest = {};
-    QElapsedTimer* timer = new QElapsedTimer;
-    Note* dot = new Note(this,":/test/nku.png",100,0);
+    //QElapsedTimer* timer = new QElapsedTimer;
+    Note* dot = new Note(this,100,'Z',":/test/nku.png");
     Notestest.push_back(dot);
 
 
@@ -231,11 +263,28 @@ void Gamewindow::init(){
     });
 
 
+    connect(player,&QMediaPlayer::stateChanged,[=](){
+        if(player->state() == QMediaPlayer::StoppedState)
+        {
+            bgtimer->stop();
+            QEventLoop eventloop;
+            QTimer::singleShot(1000, &eventloop, SLOT(quit()));
+            //qDebug()<<"1s";
+            eventloop.exec();//打完歌以后暂停1s，开启贤者模式（不是
+            res->init();
+            emit Game_Over();
+        }
+    });
 
 
-    coun->start();
 
-    Notestest[i]->judge.start();
+    player->setMedia(QUrl("qrc:/mus/"+nameofsong+".wav"));
+    player->play();
+    bgtimer->start(1);
+
+    //coun->start();
+
+    //Notestest[i]->judge.start();
 
     //线程
 //    while(remaining_length)
@@ -263,13 +312,8 @@ void Gamewindow::init(){
 //    }
 
 
-    QEventLoop eventloop;
-    QTimer::singleShot(1000, &eventloop, SLOT(quit()));
-    //qDebug()<<"1s";
-    eventloop.exec();//打完歌以后暂停1s，开启贤者模式（不是
-    coun->invalidate();
-    res->init();
-    emit Game_Over();
+
+
     //qDebug()<<"emitted";
 }
 

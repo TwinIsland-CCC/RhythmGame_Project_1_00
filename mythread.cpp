@@ -14,11 +14,15 @@ void mythread::load_widget()
 
 void mythread::load_song()
 {
-    QString filename="../Table/"+nameofsong+".txt";
+
+    cout<<"load_song执行了";
+
+    QString filename="../table/"+nameofsong+".txt";
+    qDebug()<<filename;
 //    QTextCodec *code = QTextCodec::codecForName("GB2312");//解决中文路径问题
     string name = filename.toStdString();
-    fstream file(name,ios::in|ios::binary);
-    if(file)
+    fstream file(name,ios::in);
+    //if(file)
     {
         file.read(reinterpret_cast<char*>(&BPM),sizeof(BPM));
 
@@ -28,28 +32,30 @@ void mythread::load_song()
             key_load.push_back(note);
         }
         key_num=key_load.size();//初始化总key数
+        qDebug()<<key_num;
         for(int i=0;i<key_num;i++)
         {
-            Notes.append(NULL);
-
+            Note* dot = new Note(nullptr,key_load[i].token,key_load[i].key);
+            Notes.push_back(dot);
         }
         file.close();
 
         emit load_song_finsh();
 
     }
-    else
+    //else
     {
-        cout<<"fail";
+        //cout<<"fail";
     }
 }
 
 void mythread::load_save()
 {
+    cout<<"load_save执行了";
     //读取存挡
     ifstream save_file;
     string path = "../save/save.txt";
-    save_file.open(path, ios::in|ios::binary);
+    save_file.open(path, ios::in|ios::binary);//以二进制方式为读文件而打开文件
     if (!save_file)
     {
         archive save;
@@ -75,6 +81,7 @@ void mythread::load_save()
 
 void mythread::keep_save()
 {
+    cout<<"keep_save执行了";
     if(save_data.size()!=0)
     {
         ofstream save_file("../save/save.txt",ios::out|ios::binary);

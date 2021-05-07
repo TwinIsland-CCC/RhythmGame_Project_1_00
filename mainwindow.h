@@ -8,6 +8,7 @@
 #include "source.h"
 #include <QMediaPlayer>
 #include "playscene.h"
+#include "mythread.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,8 +26,13 @@ private:
     Ui::MainWindow *ui;
     tutorialwindow tutorial1;
     protutorialwidget tutorial2;
+
+    QThread* initthread;
+    mythread* init;
+
     QMovie movie;
     QMediaPlayer *player;
+    QMediaPlayer *meow;
 
 };
 #endif // MAINWINDOW_H

@@ -8,5 +8,11 @@
         <file>sdorica.jpg</file>
         <file>eveonecat1.gif</file>
         <file>faradise.jpg</file>
+        <file>cat.gif</file>
+        <file>cat2.gif</file>
+    </qresource>
+    <qresource prefix="/key">
+        <file>key/key1.png</file>
+        <file>key/key2.png</file>
     </qresource>
 </RCC>
