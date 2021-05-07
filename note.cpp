@@ -59,7 +59,7 @@ Note::Note(QWidget *parent,char typ,double start_time,QString img)
 
 int Note::judgetrigggered()
 {
-    return judge.elapsed();
+    return judge->elapsed();
     //int remainingtime = interval-judge.elapsed();
 }
 

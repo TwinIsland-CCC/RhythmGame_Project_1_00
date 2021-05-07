@@ -61,9 +61,21 @@
     <rect>
      <x>100</x>
      <y>20</y>
-     <width>221</width>
-     <height>121</height>
+     <width>220</width>
+     <height>120</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>220</width>
+     <height>120</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>220</width>
+     <height>120</height>
+    </size>
    </property>
    <property name="text">
     <string>TextLabel</string>

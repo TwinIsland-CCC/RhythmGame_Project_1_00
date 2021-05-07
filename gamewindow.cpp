@@ -73,6 +73,10 @@ Gamewindow::Gamewindow(QWidget *parent) :
         meow->play();
     });
 
+    //创建线程
+    mythread* jud = new mythread();//为判定创建线程
+    jud->moveToThread(&judgethread);
+    judgethread.start();
 
 
 }
@@ -97,21 +101,17 @@ void Gamewindow::init(){
         emit Game_Over();
     });
 
-    //创建线程
-    mythread* jud = new mythread();//为判定创建线程
-    jud->moveToThread(&judgethread);
-    judgethread.start();
-
 
 
     //整体的判定
     //游戏开始
 
     //测试
-    QVector<Note*>Notestest = {};
-    //QElapsedTimer* timer = new QElapsedTimer;
-    Note* dot = new Note(this,100,'Z',":/test/nku.png");
-    Notestest.push_back(dot);
+//    QVector<Note*> = {};
+//    //QElapsedTimer* timer = new QElapsedTimer;
+//    Note* dot = new Note(this,100,'Z',":/test/nku.png");
+//    .push_back(dot);
+
 
 
     //需求：写出音符下落模块
@@ -119,67 +119,72 @@ void Gamewindow::init(){
     i = 0;//第i个音符
     remaining_length = song_length;
 
-    key_num = Notestest.length();
+    key_num = Notes.length();
+    qDebug()<<key_num;
     miss_num = key_num;
-    score_per_note = 10000000 / key_num;
-
-    connect(ui->Mainkey1,&QPushButton::clicked,[=](){
+    //if(key_num == 0)key_num++;
+    qDebug()<<"timer活着的";
+    connect(ui->Mainkey1,&QPushButton::clicked,[=]()
+    {
         qDebug()<<"key1被按下2";
         //实现判定模块
         //如果计时器没关着，检测到按键按下后计时器停止
 //调试用代码
-//        bool flag = Notestest[i]->judge.isValid();
+//        bool flag = [i]->judge.isValid();
 //        qDebug()<<flag;
-
-        if(!(Notestest[i]->been_judged) && Notestest[i]->judge.isValid())
+        if(!(Notes[i]->been_judged) && Notes[i]->judge->isValid())
         {
             //qDebug()<<"timer活着的";
-            if(!(Notestest[i]->type))
+            if(!(Notes[i]->type))
             {
                 qDebug()<<"音符在左边";
                 //按对了就启动判定
-                int remain = interval - Notestest[i]->judge.elapsed();
+                int remain = interval - Notes[i]->judge->elapsed();
                 if(remain > 0 && remain <= 50 | remain > 150 && remain < 200)
                 {
                     qDebug()<<remain<<" "<<"great";
-                    Notestest[i]->been_judged = true;
-                    emit Notestest[i]->great();
+                    Notes[i]->been_judged = true;
+                    emit Notes[i]->great();
                     get_score += (score_per_note / 2);
                     great_num++;
                     qDebug()<<great_num;
                     miss_num--;
                     ui->ScoreLabel->setText(QString::number(get_score));
+                    if(i<key_num)i++;
                 }
                 else if(remain > 50 && remain <= 75 | remain > 125 && remain <= 150)
                 {
                     qDebug()<<remain<<" "<<"perfect";
-                    Notestest[i]->been_judged = true;
-                    emit Notestest[i]->perfect();
+                    Notes[i]->been_judged = true;
+                    emit Notes[i]->perfect();
                     get_score += score_per_note;
                     perfect_num++;
                     qDebug()<<perfect_num;
                     miss_num--;
                     ui->ScoreLabel->setText(QString::number(get_score));
+                    if(i<key_num)i++;
                 }
                 else if(remain > 75 && remain <= 125)
                 {
                     qDebug()<<remain<<" "<<"max perfect";
-                    Notestest[i]->been_judged = true;
-                    emit Notestest[i]->maxperfect();
+                    Notes[i]->been_judged = true;
+                    emit Notes[i]->maxperfect();
                     get_score += (score_per_note + 1);
                     maxperfect_num++;
                     qDebug()<<maxperfect_num;
                     perfect_num++;
                     miss_num--;
                     ui->ScoreLabel->setText(QString::number(get_score));
+                    if(i<key_num)i++;
                 }
                 else
                 {
                     qDebug()<<remain<<" "<<"miss";
-                    Notestest[i]->been_judged = true;
-                    emit Notestest[i]->miss();
+                    Notes[i]->been_judged = true;
+                    emit Notes[i]->miss();
                     qDebug()<<miss_num;
                     ui->ScoreLabel->setText(QString::number(get_score));
+                    if(i<key_num)i++;
                 }
             }
             else
@@ -194,59 +199,65 @@ void Gamewindow::init(){
         }
     });
 
+    //qDebug()<<key_num;
+
     connect(ui->Mainkey2,&QPushButton::clicked,[=](){
         qDebug()<<"key2被按下2";
         //实现判定模块
         //如果计时器没关着，检测到按键按下后计时器停止
-        if(!(Notestest[i]->been_judged) && Notestest[i]->judge.isValid())
+        if(!(Notes[i]->been_judged) && Notes[i]->judge->isValid())
         {
             //qDebug()<<"timer活着的";
-            if(Notestest[i]->type)
+            if(Notes[i]->type)
             {
                 qDebug()<<"音符在右边";
                 //按对了就启动判定
-                int remain = interval - Notestest[i]->judge.elapsed();
+                int remain = interval - Notes[i]->judge->elapsed();
                 if(remain > 0 && remain <= 50 | remain > 150 && remain < 200)
                 {
                     qDebug()<<remain<<" "<<"great";
-                    Notestest[i]->been_judged = true;
-                    emit Notestest[i]->great();
+                    Notes[i]->been_judged = true;
+                    emit Notes[i]->great();
                     get_score += (score_per_note / 2);
                     great_num++;
                     qDebug()<<great_num;
                     miss_num--;
                     ui->ScoreLabel->setText(QString::number(get_score));
+                    if(i<key_num - 1)i++;
                 }
                 else if(remain > 50 && remain <= 75 | remain > 125 && remain <= 150)
                 {
                     qDebug()<<remain<<" "<<"perfect";
-                    Notestest[i]->been_judged = true;
-                    emit Notestest[i]->perfect();
+                    Notes[i]->been_judged = true;
+                    emit Notes[i]->perfect();
                     get_score += score_per_note;
                     perfect_num++;
                     qDebug()<<perfect_num;
                     miss_num--;
                     ui->ScoreLabel->setText(QString::number(get_score));
+                    if(i<key_num)i++;
                 }
                 else if(remain > 75 && remain <= 125)
                 {
                     qDebug()<<remain<<" "<<"max perfect";
-                    Notestest[i]->been_judged = true;
-                    emit Notestest[i]->maxperfect();
+                    Notes[i]->been_judged = true;
+                    emit Notes[i]->maxperfect();
                     get_score += (score_per_note + 1);
                     maxperfect_num++;
                     qDebug()<<maxperfect_num;
                     perfect_num++;
                     miss_num--;
                     ui->ScoreLabel->setText(QString::number(get_score));
+                    if(i<key_num)i++;
                 }
                 else
                 {
                     qDebug()<<remain<<" "<<"miss";
-                    Notestest[i]->been_judged = true;
-                    emit Notestest[i]->miss();
+                    Notes[i]->been_judged = true;
+                    emit Notes[i]->miss();
                     qDebug()<<miss_num;
                     ui->ScoreLabel->setText(QString::number(get_score));
+                    if(i<key_num - 1)i++;
                 }
             }
             else
@@ -262,6 +273,7 @@ void Gamewindow::init(){
 
     });
 
+    //qDebug()<<key_num;
 
     connect(player,&QMediaPlayer::stateChanged,[=](){
         if(player->state() == QMediaPlayer::StoppedState)
@@ -276,26 +288,37 @@ void Gamewindow::init(){
         }
     });
 
+    //待优化
+    connect(bgtimer,&QTimer::timeout,[=](){
+        current++;
+        if(current == Notes[i]->note_start_time)
+        {
+            Notes[i]->judge->start();
+        }
+    });
 
+    //qDebug()<<key_num;
 
     player->setMedia(QUrl("qrc:/mus/"+nameofsong+".wav"));
     player->play();
     bgtimer->start(1);
 
+
+
     //coun->start();
 
-    //Notestest[i]->judge.start();
+    //[i]->judge.start();
 
     //线程
 //    while(remaining_length)
 //    {
-////        if(Notestest[i]->note_start_time == coun->elapsed())
+////        if([i]->note_start_time == coun->elapsed())
 ////        {
 ////            //实现：使音符下落
 
 
 ////            //让音符开始判定计时，完成判定模块
-////            Notestest[i]->judge->start();
+////            [i]->judge->start();
 ////            //需求：当开始之后时间经过100ms时让这个音符的judge变为invalid
 
 

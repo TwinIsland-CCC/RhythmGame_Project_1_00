@@ -20,7 +20,7 @@ QVector<Note*>Notes = {};//谱面的实现
 
 int level = 0;
 
-int key_num = 1;//总音符个数
+int key_num = 0;//总音符个数
 
 int interval = 200;//判定区间
 

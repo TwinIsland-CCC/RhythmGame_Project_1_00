@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>table/test.txt</file>
+    </qresource>
+</RCC>

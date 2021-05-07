@@ -3,9 +3,14 @@
 
 #include <QObject>
 #include <QThread>
+#include <string>
+#include <sstream>
+#include <QString>
+#include <QTextStream>
 #include <fstream>
 #include "source.h"
 #include "data.h"
+#include <cstdio>
 class mythread : public QObject
 {
     Q_OBJECT

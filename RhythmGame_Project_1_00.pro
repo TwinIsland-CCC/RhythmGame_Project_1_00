@@ -64,6 +64,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     music/mus.qrc \
+    table.qrc \
     testres/testres.qrc \
     video.qrc
 
