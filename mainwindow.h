@@ -21,6 +21,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+public slots:
+    void Re_init();
+    void Re_init_icon();
 
 private:
     Ui::MainWindow *ui;
@@ -33,6 +36,12 @@ private:
     QMovie movie;
     QMediaPlayer *player;
     QMediaPlayer *meow;
+
+    QLabel* statuslabel;
+    QString statusbartext;
+
+protected:
+    void keyPressEvent(QKeyEvent *event);
 
 };
 #endif // MAINWINDOW_H

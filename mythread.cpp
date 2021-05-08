@@ -29,6 +29,9 @@ void mythread::load_song()
     //qDebug()<<str<<"is couted";
     QTextStream str1(file);
     int tem1,tem2,tem3;
+
+    str1>>current_potential;
+    qDebug()<<"当前歌曲的ptt为"<<current_potential;
     while(!str1.atEnd())
     {
         rhythm note;
@@ -42,108 +45,161 @@ void mythread::load_song()
 
     }
 
-    qDebug()<<key_num;
+    cout<<key_num;
     miss_num = key_num;
     score_per_note = 10000000 / key_num;
     for(int i=0;i<key_num;i++)
     {
-        qDebug()<<i;
+        qDebug()<<"在给第"<<i<<"个音符赋值";
         Note* dot = new Note(nullptr,key_load[i].token,key_load[i].key);
         Notes.push_back(dot);
+        QLabel* dot2 = new QLabel;
+        dot2->setPixmap(dot->image);
+        float_key.push_back(dot2);
+        float_key[i]->resize(64,64);
+        float_key[i]->setScaledContents(true);
+        float_key[i]->setWindowFlags(Qt::CustomizeWindowHint|Qt::FramelessWindowHint);
+        if(dot->type == 'Z' || dot->type == 'V')
+        {
+            float_key[i]->move(320,0);
+        }
+        else if(dot->type == 'X' || dot->type == 'C')
+        {
+            float_key[i]->move(480,0);
+        }
     }
     file->close();
 
-
     emit load_song_finsh();
-
 
     cout<<"load_song执行完毕";
 
-
-//    QByteArray ba;
-//    ba.append(filename);
-//    const char* name = ba.data();
-//    freopen(name,"r"/*代表读取*/,stdin);
-//    QTextStream* name = new QTextStream(&filename);
-
-
-
-
-
-//    QTextCodec *code = QTextCodec::codecForName("GB2312");//解决中文路径问题
-//    string name = filename.toStdString();
-//    fstream file(name,ios::in);
-//    if(file)
-//    {
-//        file.read(reinterpret_cast<char*>(&BPM),sizeof(BPM));
-
-//        rhythm note;
-//        while(file.read(reinterpret_cast<char*>(&note),sizeof(note)))
-//        {
-//            key_load.push_back(note);
-//        }
-//        key_num=key_load.size();//初始化总key数
-//        qDebug()<<key_num;
-//        for(int i=0;i<key_num;i++)
-//        {
-//            Note* dot = new Note(nullptr,key_load[i].token,key_load[i].key);
-//            Notes.push_back(dot);
-//        }
-//        file.close();
-
-//        emit load_song_finsh();
-
-//    }
-//    else
-//    {
-//        //cout<<"fail";
-//    }
 }
 
 void mythread::load_save()
 {
     cout<<"load_save执行了";
-    //读取存挡
-    ifstream save_file;
-    string path = "../save/save.txt";
-    save_file.open(path, ios::in|ios::binary);//以二进制方式为读文件而打开文件
-    if (!save_file)
+
+    QString filename1 = "C:/Users/CCC/Desktop/qt/RhythmGame_Project_1_00/save/songsave.txt";
+    QString filename2 = "C:/Users/CCC/Desktop/qt/RhythmGame_Project_1_00/save/hostsave.txt";
+    QFile* file1 = new QFile(filename1);
+    QFile* file2 = new QFile(filename2);
+    file1->open(QIODevice::ReadOnly);
+    file2->open(QIODevice::ReadOnly);
+    QTextStream str1(file1);
+    QTextStream str2(file2);
+    str1.setCodec("UTF-8");
+    str2.setCodec("UTF-8");
+
+    int tem1,tem2,tem3;
+    qDebug()<<"str2读取了！";
+    str2 >> user_name;
+    qDebug()<<user_name;
+
+    str2 >> user_icon;
+    qDebug()<<user_icon;
+
+    str2 >> your_potential;
+    qDebug()<<your_potential;
+
+    while(!str1.atEnd())
     {
-        archive save;
-        for(int i=0;i<numofsong;i++)
-        {
-            save.code=i;
-            save.grade=' ';
-            save.score=0;
-            save_data.push_back(save);
-        }
+        qDebug()<<"str1读取了！";
+        archive a;
+        str1 >> a.score;
+        qDebug()<<a.score;
+        str1 >> tem1;
+        str1 >> tem2;
+        str1 >> tem3;
+        str1 >> a.grade;
+        qDebug()<<a.grade;
+        str1 >> a.potential;
+        qDebug()<<a.potential;
+
+        save_data.push_back(a);
+
+
     }
-    else
-    {
-        archive save;
-        while(save_file.read(reinterpret_cast<char*>(&save),sizeof(save)))
-        {
-            save_data.push_back(save);
-        }
-        save_file.close();
-    }
+
+
+    file1->close();
+    file2->close();
+
+
+
+    cout<<"load_save执行完毕";
+
 
 }
 
 void mythread::keep_save()
 {
     cout<<"keep_save执行了";
-    if(save_data.size()!=0)
+
+
+
+
+
+//    if(save_data.size()!=0)
+//    {
+//        ofstream save_file("../save/save.txt",ios::out|ios::binary);
+
+//        for(int i=0;i<numofsong;i++)
+//        {
+//            save_file.write(reinterpret_cast<char*>(&save_data[i]),sizeof(save_data[i]));
+//        }
+
+//        save_file.close();
+//    }
+}
+
+void mythread::over_save()//保存
+{
+    cout<<"over_save执行了";
+    QString filename1 = "C:/Users/CCC/Desktop/qt/RhythmGame_Project_1_00/save/songsave.txt";
+    QString filename2 = "C:/Users/CCC/Desktop/qt/RhythmGame_Project_1_00/save/hostsave.txt";
+    QFile* file1 = new QFile(filename2);//存歌
+    QFile* file2 = new QFile(filename1);//存信息
+//    file1->open(QIODevice::WriteOnly);
+//    file2->open(QIODevice::WriteOnly);
+    file1->open(QIODevice::ReadWrite);
+    file2->open(QIODevice::ReadWrite);
+    QTextStream str1(file1);
+    QTextStream str2(file2);
+    str1.setCodec("UTF-8");
+    str2.setCodec("UTF-8");
+
+    archive get;
+    if(get_score>=save_data[current_song].score)
     {
-        ofstream save_file("../save/save.txt",ios::out|ios::binary);
+        get.grade = get_level;
+        get.score = get_score;
+        get.potential = get_potential;
+        save_data[current_song] = get;
 
-        for(int i=0;i<numofsong;i++)
+
+        QString get2 = "";
+        for(int t = 0 ;t < numofsong ;t++)
         {
-            save_file.write(reinterpret_cast<char*>(&save_data[i]),sizeof(save_data[i]));
+            get2 += QString::number(save_data[t].score) + " " + save_data[t].grade + " " + QString::number(save_data[t].potential) + "\n";
         }
-
-        save_file.close();
+        qDebug()<<get2;
+        file2->flush();
+        cout<<"file2的flush执行完毕";
+        str2<<get2;
+        cout<<"get2已导入";
     }
+    else
+    {
+        cout<<"分数更低了，无需导入";
+    }
+
+    file1->close();
+    file2->close();
+
+    cout<<"over_save执行完毕";
+
+
 }
 
 void mythread::calculate_judge()

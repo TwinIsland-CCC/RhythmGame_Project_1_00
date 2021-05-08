@@ -14,7 +14,7 @@ class Note : public QWidget
 public:
     explicit Note(QWidget *parent = nullptr);
     //explicit Note(QWidget *parent = nullptr,QString img = "",QElapsedTimer* judge = new QElapsedTimer,double note_start_time = 0,int type = 0);
-    explicit Note(QWidget *parent = nullptr,char type = 'Z',double note_start_time = 0,QString img = "");
+    explicit Note(QWidget *parent = nullptr,double note_start_time = 0,char type = 'Z',QString img = "");
     ~Note();
     QString image;//音符材质
     //需求：按照时间实现判定，而非音符距离判定线距离，这样才能良好地实现调速功能
@@ -24,6 +24,7 @@ public:
     //type是音符的类型，暂时只有0和1，都是单键
     int y = 0;//实现动画
     bool been_judged = false;
+    void drawBackGround(QWidget* w,QString img);
 
 signals:
     void maxperfect();//四种信号，对应四种判定

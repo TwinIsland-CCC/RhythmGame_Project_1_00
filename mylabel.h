@@ -18,6 +18,7 @@ public:
     explicit mylabel(QWidget *parent = nullptr);
     ~mylabel();
     void mousePressEvent(QMouseEvent *ev);
+    int y = 0;
 
 signals:
     void clicked();

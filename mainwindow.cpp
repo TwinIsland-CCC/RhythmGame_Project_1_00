@@ -23,6 +23,15 @@ MainWindow::MainWindow(QWidget *parent)
     PlayScene* play = new PlayScene;
     OptionWindow* option = new OptionWindow;
 
+    init = new mythread;
+    initthread = new QThread(this);
+    init->moveToThread(initthread);
+    initthread->start();
+
+    //connect(this,&QWidget::,init,&mythread::load_save);
+    //connect(init,&mythread::load_widget_signal,this,&Widget::DealLoadWidget);
+    connect(ui->ExitBtn,&QPushButton::clicked,init,&mythread::keep_save);
+
 //    if(new_or_old)
 //    {
 //        NewRoom* ro = new NewRoom;
@@ -38,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
     player->setVolume(50);//音量
     player->play();//开始播放，也可以用按钮的方式，这里用的是菜单栏中的action
 
+    //小彩蛋
     meow = new QMediaPlayer;
     QMediaPlaylist* list2 = new QMediaPlaylist;
     list2->addMedia(QUrl("qrc:/mus/sounds/sounds/meow.mp3"));
@@ -49,6 +59,8 @@ MainWindow::MainWindow(QWidget *parent)
         meow->play();
     });
 
+    ui->IconLabel->setPixmap(user_icon);
+
     //监听各种back按钮，用于实现场景切换
     connect(play,&PlayScene::backbtnpushed,this,[=](){
         player->play();
@@ -56,7 +68,10 @@ MainWindow::MainWindow(QWidget *parent)
         this->show();
     });
 
+    //对option窗口的设置
     connect(option,&OptionWindow::FinishBtnpushed,this,[=](){
+        Re_init();
+        play->Re_init();
         option->hide();
         this->show();
     });
@@ -65,6 +80,12 @@ MainWindow::MainWindow(QWidget *parent)
         option->hide();
         this->show();
     });
+
+    connect(option,&OptionWindow::OpenBtnpushed,this,[=](){
+        Re_init_icon();
+        play->Re_init_icon();
+    });
+
 
     //点击工具栏帮助中新手教程，弹出一个窗口，里面显示一张图片（新手教程）
     connect(ui->tutorial,&QAction::triggered,this,[=](){
@@ -80,6 +101,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->PlayBtn,&QPushButton::clicked,this,[=](){
         player->pause();
         this->hide();
+        play->preview->play();
         play->show();
     });
 
@@ -94,11 +116,13 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
 
-    //新需求：左上角和状态栏都显示用户名和ptt，并且在左上角显示头像
 
-    QLabel* statuslabel = new QLabel;
+
+    //新需求：左上角和状态栏都显示用户名和ptt，并且在左上角显示头像
+    //已完成
+    statuslabel = new QLabel;
     ui->statusBar->addPermanentWidget(statuslabel);
-    QString statusbartext = "欢迎，";
+    statusbartext = "欢迎，";
     statusbartext+=user_name;
     statusbartext+="！您的potential是：";
     statusbartext+=QString::number(your_potential);
@@ -115,14 +139,6 @@ MainWindow::MainWindow(QWidget *parent)
         this->hide();
     });
 
-    init = new mythread;
-    initthread = new QThread(this);
-    init->moveToThread(initthread);
-    initthread->start();
-
-    connect(ui->PlayBtn,&QPushButton::clicked,init,&mythread::load_save);
-    //connect(init,&mythread::load_widget_signal,this,&Widget::DealLoadWidget);
-    connect(ui->ExitBtn,&QPushButton::clicked,init,&mythread::keep_save);
 }
 
 MainWindow::~MainWindow()
@@ -132,3 +148,39 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::Re_init()
+{
+    statusbartext = "欢迎，";
+    statusbartext+=user_name;
+    statusbartext+="！您的potential是：";
+    statusbartext+=QString::number(your_potential);
+    statuslabel->setText(statusbartext);
+
+    ui->NameLabel->setText(user_name);
+    ui->PttLabel->setText(QString::number(your_potential));
+
+}
+
+
+void MainWindow::Re_init_icon()
+{
+    ui->IconLabel->setPixmap(user_icon);
+}
+
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if(!event->isAutoRepeat())
+    {
+        if(event->key() == Qt::Key_Return)
+        {
+            qDebug()<<"push";
+            emit ui->PlayBtn->clicked();
+        }
+        else if(event->key() == Qt::Key_Escape)
+        {
+            qDebug()<<"push";
+            emit ui->ExitBtn->clicked();
+        }
+    }
+}

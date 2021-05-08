@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "source.h"
+#include "mythread.h"
 
 namespace Ui {
 class ResultWidget;
@@ -19,6 +20,9 @@ public:
     QMediaPlayer* player;
 signals:
     void ContinueBtnpushed();
+
+protected:
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     Ui::ResultWidget *ui;

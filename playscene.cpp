@@ -14,13 +14,18 @@ PlayScene::PlayScene(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QLabel* statuslabel = new QLabel;
+    statuslabel = new QLabel;
     ui->statusBar->addPermanentWidget(statuslabel);
-    QString statusbartext = "欢迎，";
+    statusbartext = "欢迎，";
     statusbartext+=user_name;
     statusbartext+="！您的potential是：";
     statusbartext+=QString::number(your_potential);
     statuslabel->setText(statusbartext);
+
+
+    ui->NameLabel->setText(user_name);
+    ui->PttLabel->setText(QString::number(your_potential));
+    ui->IconLabel->setPixmap(QPixmap(user_icon));
 
     preview = new QMediaPlayer;
     preview->setMedia(QUrl("qrc:/mus/music.wav"));
@@ -38,9 +43,16 @@ PlayScene::PlayScene(QWidget *parent) :
 
     //点击back按钮回到mainwindow
     connect(ui->Backbtn,&QPushButton::clicked,this,[=](){
-        preview->stop();
+        preview->pause();
         emit this->backbtnpushed();
     });
+
+    //默认选中paradise
+    QPixmap* pix = new QPixmap(":/test/faradise.jpg");
+    ui->label->setPixmap(*pix);
+    preview->setMedia(QUrl("qrc:/mus/preview/preview/paradise_preview_BPM126.mp3"));
+    nameofsong = "paradise";
+    current_song = 0;
 
     //点击选歌栏中每一首歌，在背景里显示相应封面
     //需求：切换特效
@@ -51,7 +63,9 @@ PlayScene::PlayScene(QWidget *parent) :
        preview->setMedia(QUrl("qrc:/mus/preview/preview/paradise_preview_BPM126.mp3"));
        preview->play();
        nameofsong = ui->toolButton->text();
-       qDebug()<<nameofsong;
+       current_song = 0;
+
+
     });
     connect(ui->toolButton_2,&QToolButton::clicked,this,[=](){
        preview->stop();
@@ -61,6 +75,8 @@ PlayScene::PlayScene(QWidget *parent) :
        preview->play();
        nameofsong = ui->toolButton_2->text();
        //qDebug()<<nameofsong;
+
+       current_song = 1;
     });
     connect(ui->toolButton_3,&QToolButton::clicked,this,[=](){
        preview->stop();
@@ -71,6 +87,7 @@ PlayScene::PlayScene(QWidget *parent) :
        nameofsong = ui->toolButton_3->text();
        //qDebug()<<nameofsong;
 
+       current_song = 2;
     });
 
     //点击选中那首歌以后，点击play进入难度选择、调速页面，播放BGMpreview
@@ -79,6 +96,7 @@ PlayScene::PlayScene(QWidget *parent) :
         this->hide();
         sele->init();
         sele->show();
+        sele->myload->load_song();
     });
 
     connect(sele,&DifficultyAndSpeedSelectWindow::Music_Stop,[=](){
@@ -95,9 +113,53 @@ PlayScene::PlayScene(QWidget *parent) :
         this->show();
     });
 
+
+
+
+
+
+
+
+
+
+
+
 }
 
 PlayScene::~PlayScene()
 {
     delete ui;
+}
+
+void PlayScene::Re_init()
+{
+    statusbartext = "欢迎，";
+    statusbartext+=user_name;
+    statusbartext+="！您的potential是：";
+    statusbartext+=QString::number(your_potential);
+    statuslabel->setText(statusbartext);
+
+    ui->NameLabel->setText(user_name);
+    ui->PttLabel->setText(QString::number(your_potential));
+
+}
+
+void PlayScene::Re_init_icon()
+{
+    ui->IconLabel->setPixmap(user_icon);
+}
+
+void PlayScene::keyPressEvent(QKeyEvent *event)
+{
+    if(!event->isAutoRepeat())
+    {
+        if(event->key() == Qt::Key_Return)
+        {
+            emit ui->Playbtn->clicked();
+        }
+        else if(event->key() == Qt::Key_Escape)
+        {
+            emit ui->Backbtn->clicked();
+        }
+    }
 }

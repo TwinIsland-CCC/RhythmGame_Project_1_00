@@ -24,11 +24,33 @@ PauseWindow::PauseWindow(QWidget *parent) :
 
     connect(ui->ContinueBtn,&QPushButton::clicked,[=](){
         emit game_continue();
+    });
 
+    connect(ui->ExitBtn,&QPushButton::clicked,[=](){
+        emit game_exit();
+    });
+
+    connect(ui->RestartBtn,&QPushButton::clicked,[=](){
+        emit game_restart();
     });
 }
 
 PauseWindow::~PauseWindow()
 {
     delete ui;
+}
+
+void PauseWindow::keyPressEvent(QKeyEvent *event)
+{
+    if(!event->isAutoRepeat())
+    {
+        if(event->key() == Qt::Key_Return)
+        {
+            emit ui->ContinueBtn->clicked();
+        }
+        else if(event->key() == Qt::Key_Escape)
+        {
+            emit ui->ContinueBtn->clicked();
+        }
+    }
 }

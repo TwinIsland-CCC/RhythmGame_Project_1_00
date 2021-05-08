@@ -137,10 +137,75 @@
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>211</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Inf</string>
+    </property>
+    <widget class="QLabel" name="PttLabel">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>60</y>
+       <width>72</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="NameLabel">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>30</y>
+       <width>72</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="IconLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>61</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="testres/testres.qrc">:/test/icon1.jpg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
    <zorder>label</zorder>
    <zorder>Backbtn</zorder>
    <zorder>scrollArea</zorder>
    <zorder>Playbtn</zorder>
+   <zorder>groupBox</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

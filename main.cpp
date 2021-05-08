@@ -13,6 +13,10 @@ int main(int argc, char *argv[])
     QPixmap pix(":/test/nku.png");
     QSplashScreen *splash=new QSplashScreen(pix);
     splash->show();
+
+    mythread myT;
+    myT.load_save();
+
     QThread::sleep(1);
 
 //    if(new_or_old)
@@ -22,6 +26,7 @@ int main(int argc, char *argv[])
 //        ro->show();
 //    }
     MainWindow w;
+
     w.show();
 
 

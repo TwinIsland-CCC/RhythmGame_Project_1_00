@@ -10,6 +10,7 @@
         <file>faradise.jpg</file>
         <file>cat.gif</file>
         <file>cat2.gif</file>
+        <file>cat3.gif</file>
     </qresource>
     <qresource prefix="/key">
         <file>key/key1.png</file>

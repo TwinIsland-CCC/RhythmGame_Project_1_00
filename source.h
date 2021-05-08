@@ -1,7 +1,7 @@
 #ifndef SOURCE_H
 #define SOURCE_H
 
-#include <QApplication>
+#include<QApplication>
 #include<QBitmap>
 #include<QButtonGroup>
 #include<QCheckBox>
@@ -47,6 +47,8 @@ using namespace std;
 
 extern QString user_name;
 
+extern QString user_icon;
+
 const int numofsong = 3;
 
 extern bool new_or_old;
@@ -60,7 +62,9 @@ extern double your_potential;
 
 extern int level;
 
-extern QString nameofsong;    //选中的歌曲名字
+extern QString nameofsong;//选中的歌曲名字
+
+extern int current_song;//选中的歌曲序号
 
 extern double BPM;
 
@@ -68,7 +72,7 @@ extern int interval;//判定区间
 
 extern int combo;
 
-extern double potential;
+extern double current_potential;//选中的歌曲ptt
 
 extern QVector<Note*>Notes;
 //谱面的实现
@@ -94,6 +98,9 @@ extern double get_potential;
 
 extern QVector<rhythm>key_load;  //用于存储游戏时音符顺序
 extern QVector<archive>save_data;
+
+extern QVector<QLabel*>float_key;
+
 
 class source
 {

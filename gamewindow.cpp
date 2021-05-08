@@ -22,6 +22,7 @@ Gamewindow::Gamewindow(QWidget *parent) :
         emit ui->Mainkey2->clicked();
     });
 
+    //bgtimer->setTimerType(Qt::PreciseTimer);
 
 
     connect(ui->Mainkey1,&QPushButton::clicked,[=](){
@@ -53,8 +54,16 @@ Gamewindow::Gamewindow(QWidget *parent) :
             bgtimer->start(1);
             paus->close();
         });
-        ////restart和exit一会再写
-
+        //restart和exit
+        connect(paus,&PauseWindow::game_restart,[=](){
+            player->play();
+            bgtimer->start(1);
+            paus->close();
+        });
+        connect(paus,&PauseWindow::game_exit,[=](){
+            paus->close();
+            emit Game_Over();
+        });
 
     });
 
@@ -78,52 +87,6 @@ Gamewindow::Gamewindow(QWidget *parent) :
     jud->moveToThread(&judgethread);
     judgethread.start();
 
-
-}
-
-void Gamewindow::init(){
-    //创建成绩窗口
-    ResultWidget* res = new ResultWidget();
-    res->setWindowModality(Qt::ApplicationModal);
-
-    //主要的游戏交互窗口
-    //QElapsedTimer* coun = new QElapsedTimer();
-
-    //结束以后显示成绩
-    connect(this,&Gamewindow::Game_Over,[=](){
-        this->hide();
-        res->show();
-    });
-
-    //监听result中的Continue按钮，用于实现场景切换
-    connect(res,&ResultWidget::ContinueBtnpushed,[=](){
-        res->close();
-        emit Game_Over();
-    });
-
-
-
-    //整体的判定
-    //游戏开始
-
-    //测试
-//    QVector<Note*> = {};
-//    //QElapsedTimer* timer = new QElapsedTimer;
-//    Note* dot = new Note(this,100,'Z',":/test/nku.png");
-//    .push_back(dot);
-
-
-
-    //需求：写出音符下落模块
-    song_length = 2000;//通过文件读取歌曲长度（待实现）
-    i = 0;//第i个音符
-    remaining_length = song_length;
-
-    key_num = Notes.length();
-    qDebug()<<key_num;
-    miss_num = key_num;
-    //if(key_num == 0)key_num++;
-    qDebug()<<"timer活着的";
     connect(ui->Mainkey1,&QPushButton::clicked,[=]()
     {
         qDebug()<<"key1被按下2";
@@ -150,7 +113,10 @@ void Gamewindow::init(){
                     qDebug()<<great_num;
                     miss_num--;
                     ui->ScoreLabel->setText(QString::number(get_score));
-                    if(i<key_num)i++;
+                    if(i<key_num - 1)i++;
+                    combo++;
+                    if(combo >= highest_combo)highest_combo = combo;
+                    ui->ComboLabel->setText(QString::number(combo));
                 }
                 else if(remain > 50 && remain <= 75 | remain > 125 && remain <= 150)
                 {
@@ -162,7 +128,10 @@ void Gamewindow::init(){
                     qDebug()<<perfect_num;
                     miss_num--;
                     ui->ScoreLabel->setText(QString::number(get_score));
-                    if(i<key_num)i++;
+                    if(i<key_num - 1)i++;
+                    combo++;
+                    if(combo >= highest_combo)highest_combo = combo;
+                    ui->ComboLabel->setText(QString::number(combo));
                 }
                 else if(remain > 75 && remain <= 125)
                 {
@@ -175,7 +144,10 @@ void Gamewindow::init(){
                     perfect_num++;
                     miss_num--;
                     ui->ScoreLabel->setText(QString::number(get_score));
-                    if(i<key_num)i++;
+                    if(i<key_num - 1)i++;
+                    combo++;
+                    if(combo >= highest_combo)highest_combo = combo;
+                    ui->ComboLabel->setText(QString::number(combo));
                 }
                 else
                 {
@@ -184,7 +156,10 @@ void Gamewindow::init(){
                     emit Notes[i]->miss();
                     qDebug()<<miss_num;
                     ui->ScoreLabel->setText(QString::number(get_score));
-                    if(i<key_num)i++;
+                    if(i<key_num - 1)i++;
+                    if(combo >= highest_combo)highest_combo = combo;
+                    combo = 0;
+                    ui->ComboLabel->setText(QString::number(combo));
                 }
             }
             else
@@ -224,6 +199,9 @@ void Gamewindow::init(){
                     miss_num--;
                     ui->ScoreLabel->setText(QString::number(get_score));
                     if(i<key_num - 1)i++;
+                    combo++;
+                    ui->ComboLabel->setText(QString::number(combo));
+                    if(combo >= highest_combo)highest_combo = combo;
                 }
                 else if(remain > 50 && remain <= 75 | remain > 125 && remain <= 150)
                 {
@@ -235,7 +213,10 @@ void Gamewindow::init(){
                     qDebug()<<perfect_num;
                     miss_num--;
                     ui->ScoreLabel->setText(QString::number(get_score));
-                    if(i<key_num)i++;
+                    if(i<key_num - 1)i++;
+                    combo++;
+                    ui->ComboLabel->setText(QString::number(combo));
+                    if(combo >= highest_combo)highest_combo = combo;
                 }
                 else if(remain > 75 && remain <= 125)
                 {
@@ -248,7 +229,10 @@ void Gamewindow::init(){
                     perfect_num++;
                     miss_num--;
                     ui->ScoreLabel->setText(QString::number(get_score));
-                    if(i<key_num)i++;
+                    if(i<key_num - 1)i++;
+                    combo++;
+                    ui->ComboLabel->setText(QString::number(combo));
+                    if(combo >= highest_combo)highest_combo = combo;
                 }
                 else
                 {
@@ -258,6 +242,9 @@ void Gamewindow::init(){
                     qDebug()<<miss_num;
                     ui->ScoreLabel->setText(QString::number(get_score));
                     if(i<key_num - 1)i++;
+                    if(combo >= highest_combo)highest_combo = combo;
+                    combo = 0;
+                    ui->ComboLabel->setText(QString::number(combo));
                 }
             }
             else
@@ -275,6 +262,64 @@ void Gamewindow::init(){
 
     //qDebug()<<key_num;
 
+
+
+    //待优化
+    connect(bgtimer,&QTimer::timeout,[=](){
+        current++;
+        //qDebug()<<"进入判定了！";
+        //qDebug()<<current<<" "<<current_i<<" "<<Notes[current_i]->note_start_time;
+        if(current == Notes[current_i]->note_start_time)
+        {
+            qDebug()<<"应在"<<Notes[current_i]->note_start_time<<"处出现";
+            //Notes[current_i]->show();
+
+            float_key[i]->show();
+            qDebug()<<"实在"<<current2<<"处出现";
+            Notes[current_i++]->judge->start();
+            qDebug()<<"第"<<current_i<<"个音符开始判定了！";
+        }
+        if(current - Notes[i]->note_start_time >= 200)
+        {
+            qDebug()<<"第"<<i<<"个音符miss了！";
+            Notes[i]->been_judged = true;
+            emit Notes[i]->miss();
+            qDebug()<<miss_num;
+            ui->ScoreLabel->setText(QString::number(get_score));
+            if(i<key_num - 1)i++;
+            ui->ComboLabel->setText(QString::number(combo));
+            if(combo >= highest_combo)highest_combo = combo;
+            combo = 0;
+        }
+    });
+
+//    connect(bgtimer2,&QTimer::timeout,[=](){
+//        current2++;
+//    });
+
+
+}
+
+void Gamewindow::init(){
+    //创建成绩窗口
+    ResultWidget* res = new ResultWidget();
+    res->setWindowModality(Qt::ApplicationModal);
+
+    //主要的游戏交互窗口
+    //QElapsedTimer* coun = new QElapsedTimer();
+
+    //结束以后显示成绩
+    connect(this,&Gamewindow::Game_Over,[=](){
+        this->hide();
+        res->show();
+    });
+
+    //监听result中的Continue按钮，用于实现场景切换
+    connect(res,&ResultWidget::ContinueBtnpushed,[=](){
+        res->close();
+        emit Game_Over();
+    });
+
     connect(player,&QMediaPlayer::stateChanged,[=](){
         if(player->state() == QMediaPlayer::StoppedState)
         {
@@ -288,56 +333,25 @@ void Gamewindow::init(){
         }
     });
 
-    //待优化
-    connect(bgtimer,&QTimer::timeout,[=](){
-        current++;
-        if(current == Notes[i]->note_start_time)
-        {
-            Notes[i]->judge->start();
-        }
-    });
+
+    //需求：写出音符下落模块
+    song_length = 2000;//通过文件读取歌曲长度（待实现）
+    i = 0;//第i个音符
+    remaining_length = song_length;
+    key_num = Notes.length();
+    qDebug()<<key_num;
+    miss_num = key_num;
+    //if(key_num == 0)key_num++;
+    qDebug()<<"timer活着的";
 
     //qDebug()<<key_num;
 
     player->setMedia(QUrl("qrc:/mus/"+nameofsong+".wav"));
-    player->play();
+
     bgtimer->start(1);
+    bgtimer2->start(1);
 
-
-
-    //coun->start();
-
-    //[i]->judge.start();
-
-    //线程
-//    while(remaining_length)
-//    {
-////        if([i]->note_start_time == coun->elapsed())
-////        {
-////            //实现：使音符下落
-
-
-////            //让音符开始判定计时，完成判定模块
-////            [i]->judge->start();
-////            //需求：当开始之后时间经过100ms时让这个音符的judge变为invalid
-
-
-////            //下一个音符
-////            i++;
-////        }
-////        else
-////        {
-////            qDebug()<<"err";
-////        }
-
-//        remaining_length = song_length - coun->elapsed();
-
-//    }
-
-
-
-
-    //qDebug()<<"emitted";
+    player->play();
 }
 
 void Gamewindow::keyPressEvent(QKeyEvent *event)
@@ -370,7 +384,8 @@ void Gamewindow::keyPressEvent(QKeyEvent *event)
             //qDebug()<<"press  c";
             emit X_triggered();
             break;
-
+        case Qt::Key_Escape:
+            emit ui->PauseBtn->clicked();
         }
     }
 }
@@ -391,3 +406,4 @@ Gamewindow::~Gamewindow()
     judgethread.wait();
     delete ui;
 }
+

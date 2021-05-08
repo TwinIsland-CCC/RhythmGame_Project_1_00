@@ -25,9 +25,9 @@ struct rhythm
 
 struct archive
 {
-    int code;
-    char grade;
     int score;
+    QString grade;
+    double potential;
 };
 
 #endif // DATA_H

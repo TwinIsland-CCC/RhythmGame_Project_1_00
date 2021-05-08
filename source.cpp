@@ -1,8 +1,9 @@
 #include "source.h"
 
 QString user_name = "CCC";
+QString user_icon = ":/test/icon1.jpg";
 
-QString nameofsong = "";    //选中的歌曲名字
+QString nameofsong = "";//选中的歌曲名字
 
 bool new_or_old = true;//true为新手，默认为true
 
@@ -12,9 +13,11 @@ double your_potential = 0;//初始化ptt
 
 double BPM = 0;
 
+int current_song = 0;//默认选择的歌
+
 int combo = 0;//初始化连击数
 
-double potential = 0;//初始化歌曲ptt
+double current_potential = 0;//初始化歌曲ptt
 
 QVector<Note*>Notes = {};//谱面的实现
 
@@ -40,6 +43,28 @@ double get_potential = 0;//初始化获得的ptt
 QVector<archive>save_data = {};//初始化存档数据
 
 QVector<rhythm>key_load = {};  //初始化谱面数据
+
+
+
+QTime myTime;
+
+QTimer *myTimer=new QTimer;
+
+int wait_time=0;    //等待时长
+
+int begin_time=0;   //开始时刻
+
+int pause_time=0;   //暂停时长
+
+int pause_begin=0;  //暂停时刻
+
+double time_per_beat=0;
+
+int intervall=0;   //定时器超时时间间隔
+
+double current_speed=0;
+
+QVector<QLabel*>float_key={};     //用于创建音符
 
 source::source()
 {

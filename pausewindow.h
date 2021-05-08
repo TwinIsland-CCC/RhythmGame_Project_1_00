@@ -24,6 +24,9 @@ signals:
     void game_restart();
     void game_exit();
 
+protected:
+    void keyPressEvent(QKeyEvent *event);
+
 private:
     Ui::PauseWindow *ui;
 };

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "source.h"
+#include "gamewindow.h"
 #include "mythread.h"
 
 namespace Ui {
@@ -19,9 +20,13 @@ public:
     void init();
     QThread* loadthread;
     mythread* myload;
+    Gamewindow* game;
 
 private:
     Ui::DifficultyAndSpeedSelectWindow *ui;
+
+protected:
+    void keyPressEvent(QKeyEvent *event);
 
 signals:
     void backbtnpushed();

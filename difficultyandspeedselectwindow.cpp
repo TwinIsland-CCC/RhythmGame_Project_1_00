@@ -10,12 +10,22 @@ DifficultyAndSpeedSelectWindow::DifficultyAndSpeedSelectWindow(QWidget *parent) 
 {
     ui->setupUi(this);
 
-
-
     //设置back按钮，以返回上一个页面
-    connect(ui->Backbtn,&QPushButton::clicked,this,[=](){
-        emit this->backbtnpushed();
-    });
+//    connect(ui->Backbtn,&QPushButton::clicked,this,[=](){
+//        emit this->backbtnpushed();
+//    });
+
+    //线程
+    loadthread =new QThread(this);
+    myload=new mythread;
+    //myload->moveToThread(loadthread);
+    //loadthread->start();
+
+
+    //connect(ui->Playbtn,&QPushButton::clicked,myload,&mythread::load_song);
+
+
+
 
     connect(ui->Playbtn,&QToolButton::clicked,this,[=](){
         //创建主要游戏窗体
@@ -40,24 +50,16 @@ DifficultyAndSpeedSelectWindow::DifficultyAndSpeedSelectWindow(QWidget *parent) 
     });
 
 
-    //线程
-    loadthread =new QThread(this);
-    myload=new mythread;
-    myload->moveToThread(loadthread);
-    loadthread->start();
 
-    connect(ui->Playbtn,&QPushButton::clicked,myload,&mythread::load_song);
-
-
-
-    //新需求：显示历史最高成绩以及评价
-    ui->bestLabel->setText("0");
 
 
 }
 
 void DifficultyAndSpeedSelectWindow::init()
 {
+    //显示历史最高成绩以及评价
+    ui->bestLabel->setText(QString::number(save_data[current_song].score));
+    ui->gradelabel->setText(save_data[current_song].grade);
     ui->NameOfSong->setText(nameofsong);
 }
 
@@ -68,4 +70,17 @@ DifficultyAndSpeedSelectWindow::~DifficultyAndSpeedSelectWindow()
     delete ui;
 }
 
-
+void DifficultyAndSpeedSelectWindow::keyPressEvent(QKeyEvent *event)
+{
+    if(!event->isAutoRepeat())
+    {
+        if(event->key() == Qt::Key_Return)
+        {
+            emit ui->Playbtn->clicked();
+        }
+        else if(event->key() == Qt::Key_Escape)
+        {
+            //emit ui->Backbtn->clicked();
+        }
+    }
+}

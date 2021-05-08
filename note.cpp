@@ -38,22 +38,38 @@ Note::Note(QWidget *parent) : QWidget(parent)
 
 //}
 
-Note::Note(QWidget *parent,char typ,double start_time,QString img)
+Note::Note(QWidget *parent,double start_time,char typ,QString img)
 : QWidget(parent),note_start_time(start_time),type(typ)
 {
     if(typ ==  'Z' || typ == 'V')
     {
+        move(320,0);
         image = ":/key/key/key1.png";
+        //drawBackGround(this,img);
+//        QFrame *frame = new QFrame;
+//         frame->setObjectName("myframe");
+//         frame->resize(124,124);
+//         frame->setStyleSheet("QFrame#myframe{border-image:url(qrc:/key/key/key1.png)}" );
+//         frame->show();
 
     }
     else if(typ ==  'X' || typ == 'C')
     {
+        move(480,0);
         image = ":/key/key/key2.png";
+        //drawBackGround(this,img);
+//        QFrame *frame = new QFrame;
+//         frame->setObjectName("myframe");
+//         frame->resize(124,124);
+//         frame->setStyleSheet("QFrame#myframe{border-image:url(qrc:/key/key/key2.png)}" );
+//         frame->show();
+
     }
     else
     {
 
     }
+    resize(124,124);
 
 }
 
@@ -66,4 +82,16 @@ int Note::judgetrigggered()
 Note::~Note()
 {
 
+}
+
+void Note::drawBackGround(QWidget* w,QString img)
+{
+    w->setAutoFillBackground(true); // 这句要加上, 否则可能显示不出背景图.
+    QPalette palette = w->palette();
+    palette.setBrush(QPalette::Window,
+            QBrush(QPixmap(img).scaled(// 缩放背景图.
+                w->size(),
+                Qt::IgnoreAspectRatio,
+                Qt::SmoothTransformation)));             // 使用平滑的缩放方式
+    w->setPalette(palette);
 }

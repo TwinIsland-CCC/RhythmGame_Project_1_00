@@ -37,9 +37,9 @@
     <property name="geometry">
      <rect>
       <x>280</x>
-      <y>470</y>
-      <width>93</width>
-      <height>28</height>
+      <y>500</y>
+      <width>100</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="text">
@@ -49,10 +49,10 @@
    <widget class="QPushButton" name="Mainkey2">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>470</y>
-      <width>93</width>
-      <height>28</height>
+      <x>440</x>
+      <y>500</y>
+      <width>100</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="text">
@@ -88,7 +88,7 @@
    <widget class="Line" name="line_2">
     <property name="geometry">
      <rect>
-      <x>390</x>
+      <x>400</x>
       <y>-20</y>
       <width>20</width>
       <height>621</height>
@@ -101,7 +101,7 @@
    <widget class="Line" name="line_3">
     <property name="geometry">
      <rect>
-      <x>540</x>
+      <x>560</x>
       <y>0</y>
       <width>20</width>
       <height>581</height>
@@ -114,22 +114,25 @@
    <widget class="QLabel" name="ScoreLabel">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>610</x>
       <y>40</y>
-      <width>72</width>
-      <height>15</height>
+      <width>131</width>
+      <height>31</height>
      </rect>
     </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>0</string>
     </property>
    </widget>
    <widget class="Line" name="line_4">
     <property name="geometry">
      <rect>
-      <x>-20</x>
-      <y>480</y>
-      <width>831</width>
+      <x>0</x>
+      <y>500</y>
+      <width>800</width>
       <height>20</height>
      </rect>
     </property>
@@ -153,6 +156,32 @@
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QLabel" name="ComboLabel">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>300</y>
+      <width>72</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LevelLabel">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>340</y>
+      <width>72</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <zorder>PauseBtn</zorder>
    <zorder>line</zorder>
    <zorder>line_2</zorder>
@@ -162,6 +191,8 @@
    <zorder>label</zorder>
    <zorder>Mainkey1</zorder>
    <zorder>Mainkey2</zorder>
+   <zorder>ComboLabel</zorder>
+   <zorder>LevelLabel</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
