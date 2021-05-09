@@ -19,10 +19,12 @@ public:
     void mousePressEvent(QMouseEvent *ev);
     char type = 'Z';
     int y = 0;
+    void dealClose();
 
 signals:
     void clicked();
     void showed();
+    void flushed();
 
 private:
 

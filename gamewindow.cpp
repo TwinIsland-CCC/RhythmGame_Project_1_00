@@ -94,12 +94,17 @@ Gamewindow::Gamewindow(QWidget *parent) :
 
     for(int v = 0;v<key_num;v++)
     {
+        connect(float_key[v],&mylabel::flushed,[=]()
+        {
+            current_i2++;
+        });
         if(float_key[v]->type == 'Z' || float_key[v]->type == 'V')
         {
             float_key[v]->setParent(this);
             float_key[v]->move(294,-32);
             //float_key[v]->move(294,468);
             float_key[v]->hide();
+
         }
         else if(float_key[v]->type == 'X' || float_key[v]->type == 'C')
         {
@@ -129,7 +134,7 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 int remain = interval - Notes[i]->judge->elapsed();
                 if(remain > 0 && remain <= 50 | remain > 150 && remain < 200)
                 {
-                    float_key[i]->close();
+                    float_key[i]->dealClose();
                     qDebug()<<current<<" "<<remain<<" "<<"great";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->great();
@@ -146,7 +151,7 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 }
                 else if(remain > 50 && remain <= 75 | remain > 125 && remain <= 150)
                 {
-                    float_key[i]->close();
+                    float_key[i]->dealClose();
                     qDebug()<<current<<" "<<remain<<" "<<"perfect";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->perfect();
@@ -163,7 +168,7 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 }
                 else if(remain > 75 && remain <= 125)
                 {
-                    float_key[i]->close();
+                    float_key[i]->dealClose();
                     qDebug()<<current<<" "<<remain<<" "<<"max perfect";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->maxperfect();
@@ -181,7 +186,7 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 }
                 else
                 {
-                    float_key[i]->close();
+                    float_key[i]->dealClose();
                     qDebug()<<current<<" "<<remain<<" "<<"miss";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->miss();
@@ -222,7 +227,7 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 int remain = interval - Notes[i]->judge->elapsed();
                 if(remain > 0 && remain <= 50 | remain > 150 && remain < 200)
                 {
-                    float_key[i]->close();
+                    float_key[i]->dealClose();
                     qDebug()<<current<<" "<<remain<<" "<<"great";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->great();
@@ -239,7 +244,7 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 }
                 else if(remain > 50 && remain <= 75 | remain > 125 && remain <= 150)
                 {
-                    float_key[i]->close();
+                    float_key[i]->dealClose();
                     qDebug()<<current<<" "<<remain<<" "<<"perfect";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->perfect();
@@ -256,7 +261,7 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 }
                 else if(remain > 75 && remain <= 125)
                 {
-                    float_key[i]->close();
+                    float_key[i]->dealClose();
                     qDebug()<<current<<" "<<remain<<" "<<"max perfect";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->maxperfect();
@@ -274,7 +279,7 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 }
                 else
                 {
-                    float_key[i]->close();
+                    float_key[i]->dealClose();
                     qDebug()<<current<<" "<<remain<<" "<<"miss";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->miss();
@@ -305,40 +310,59 @@ Gamewindow::Gamewindow(QWidget *parent) :
 
 
     //待优化
+
+
+
+
     connect(bgtimer,&QTimer::timeout,[=](){
         current++;
         current2++;
         //qDebug()<<"进入判定了！";
         //qDebug()<<current<<" "<<current_i<<" "<<Notes[current_i]->note_start_time;
-        if(current == Notes[current_i]->note_start_time - 400)
-        {
-            float_key[i]->show();
-            emit float_key[i]->showed();
-        }
+
         //qDebug()<<current<<" "<< Notes[current_i]->note_start_time - 100<<" "<<current-Notes[current_i]->note_start_time - 100;
-        if(current_i2 == -1)
+        for(int i1 = current_i2;i1 < key_num;i1++)
         {
-
-            if(current > Notes[0]->note_start_time - 100
-                    && current < Notes[0]->note_start_time + 100)
+            if(current > Notes[i1]->note_start_time - 100)
             {
-                float_key[i]->move(float_key[i]->pos().x(),
-                                  (current  - Notes[0]->note_start_time + 100) * 1);
-                //qDebug() << "moving called1";
-            }
+                float_key[i1]->show();
+                //emit float_key[i1]->showed();
+                qDebug()<<current<<" "<< Notes[current_i]->note_start_time + 100<<" "<<current-Notes[current_i]->note_start_time + 100;
 
-        }
-        else
-        {
-            if(current > Notes[current_i2]->note_start_time - 100
-                    && current < Notes[current_i2]->note_start_time + 100)
+                float_key[i1]->move(float_key[i1]->pos().x(),(current  - Notes[i1]->note_start_time + 100) * 2);
+
+            }
+            else
             {
-                float_key[i]->move(float_key[i]->pos().x(),
-                                  (current - Notes[current_i2]->note_start_time + 100) * 1);
-                qDebug() << "moving called2->"<<current - Notes[current_i2]->note_start_time + 100;
+                break;
             }
-
         }
+
+
+
+
+        //        if(current_i2 == -1)
+//        {
+
+//            if(current > Notes[0]->note_start_time - 100
+//                    && current < Notes[0]->note_start_time + 100)
+//            {
+
+//                //qDebug() << "moving called1";
+//            }
+
+//        }
+//        else
+//        {
+//            if(current > Notes[current_i2]->note_start_time - 100
+//                    && current < Notes[current_i2]->note_start_time + 100)
+//            {
+//                float_key[i]->move(float_key[i]->pos().x(),
+//                                  (current - Notes[current_i2]->note_start_time + 100) * 1);
+//                qDebug() << "moving called2->"<<current - Notes[current_i2]->note_start_time + 100;
+//            }
+
+//        }
         if(current == Notes[current_i]->note_start_time - 100)
         {
             //qDebug()<<"应在"<<Notes[current_i]->note_start_time - 100<<"处出现";
@@ -350,7 +374,7 @@ Gamewindow::Gamewindow(QWidget *parent) :
         }
         if(current - Notes[i]->note_start_time >= 100)
         {
-            float_key[i]->close();
+            float_key[i]->dealClose();
             qDebug()<<current<<" "<<"第"<<i<<"个音符miss了，应该在"<<Notes[i]->note_start_time - 100<<"处按下。";
 
             Notes[i]->been_judged = true;

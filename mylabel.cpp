@@ -16,6 +16,13 @@ void mylabel::mousePressEvent(QMouseEvent *ev){
 
 }
 
+void mylabel::dealClose()
+{
+    emit this->flushed();
+    this->close();
+
+}
+
 mylabel::~mylabel()
 {
 

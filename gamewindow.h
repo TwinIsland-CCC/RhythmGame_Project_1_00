@@ -31,7 +31,7 @@ public:
     int current = 0;
     int current2 = -400;
     int current_i = 0;
-    int current_i2 = -1;
+    int current_i2 = 0;
 signals:
     void Z_triggered();
     void X_triggered();

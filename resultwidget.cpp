@@ -12,11 +12,13 @@ ResultWidget::ResultWidget(QWidget *parent) :
     connect(ui->ContinueBtn,&QPushButton::clicked,this,[=](){
         emit this->ContinueBtnpushed();
         get_score = 0;
-        nameofsong = "";
         maxperfect_num = 0;
         perfect_num = 0;
         great_num = 0;
         key_num = 0;
+        key_load.clear();
+        Notes.clear();
+        float_key.clear();
         player->stop();
         this->close();
     });
