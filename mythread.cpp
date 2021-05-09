@@ -53,7 +53,7 @@ void mythread::load_song()
         qDebug()<<"在给第"<<i<<"个音符赋值";
         Note* dot = new Note(nullptr,key_load[i].token,key_load[i].key);
         Notes.push_back(dot);
-        QLabel* dot2 = new QLabel;
+        mylabel* dot2 = new mylabel;
         dot2->setPixmap(dot->image);
         float_key.push_back(dot2);
         float_key[i]->resize(64,64);
@@ -61,17 +61,19 @@ void mythread::load_song()
         float_key[i]->setWindowFlags(Qt::CustomizeWindowHint|Qt::FramelessWindowHint);
         if(dot->type == 'Z' || dot->type == 'V')
         {
-            float_key[i]->move(320,0);
+            float_key[i]->type = 'Z';
+            //float_key[i]->move(320,0);
         }
         else if(dot->type == 'X' || dot->type == 'C')
         {
-            float_key[i]->move(480,0);
+            float_key[i]->type = 'X';
+            //float_key[i]->move(480,0);
         }
     }
     file->close();
 
     emit load_song_finsh();
-
+    key_num -= 1;
     cout<<"load_song执行完毕";
 
 }
@@ -199,6 +201,22 @@ void mythread::over_save()//保存
 
     cout<<"over_save执行完毕";
 
+
+}
+
+void mythread::inf_save()
+{
+    cout<<"inf_save执行了";
+    QString filename1 = "C:/Users/CCC/Desktop/qt/RhythmGame_Project_1_00/save/hostsave.txt";
+    QFile* file = new QFile(filename1);//存信息
+    file->open(QIODevice::ReadWrite);
+    QTextStream str1(file);
+    str1.setCodec("UTF-8");
+    QString inf = user_name + " " + user_icon + " " + QString::number(your_potential);
+    file->flush();
+    str1<<inf;
+    file->close();
+    cout<<"inf_save执行完成";
 
 }
 

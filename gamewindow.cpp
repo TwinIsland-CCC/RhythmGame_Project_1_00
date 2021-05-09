@@ -62,7 +62,11 @@ Gamewindow::Gamewindow(QWidget *parent) :
         });
         connect(paus,&PauseWindow::game_exit,[=](){
             paus->close();
+            ResultWidget* res = new ResultWidget();
+            res->init();
+            res->show();
             emit Game_Over();
+            this->close();
         });
 
     });
@@ -87,6 +91,26 @@ Gamewindow::Gamewindow(QWidget *parent) :
     jud->moveToThread(&judgethread);
     judgethread.start();
 
+
+    for(int v = 0;v<key_num;v++)
+    {
+        if(float_key[v]->type == 'Z' || float_key[v]->type == 'V')
+        {
+            float_key[v]->setParent(this);
+            float_key[v]->move(294,-32);
+            //float_key[v]->move(294,468);
+            float_key[v]->hide();
+        }
+        else if(float_key[v]->type == 'X' || float_key[v]->type == 'C')
+        {
+            float_key[v]->setParent(this);
+            float_key[v]->move(454,-32);
+            //float_key[v]->move(454,468);
+            float_key[v]->hide();
+        }
+    }
+
+
     connect(ui->Mainkey1,&QPushButton::clicked,[=]()
     {
         qDebug()<<"key1被按下2";
@@ -105,13 +129,15 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 int remain = interval - Notes[i]->judge->elapsed();
                 if(remain > 0 && remain <= 50 | remain > 150 && remain < 200)
                 {
-                    qDebug()<<remain<<" "<<"great";
+                    float_key[i]->close();
+                    qDebug()<<current<<" "<<remain<<" "<<"great";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->great();
                     get_score += (score_per_note / 2);
                     great_num++;
                     qDebug()<<great_num;
                     miss_num--;
+                    ui->LevelLabel->setText("Great");
                     ui->ScoreLabel->setText(QString::number(get_score));
                     if(i<key_num - 1)i++;
                     combo++;
@@ -120,13 +146,15 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 }
                 else if(remain > 50 && remain <= 75 | remain > 125 && remain <= 150)
                 {
-                    qDebug()<<remain<<" "<<"perfect";
+                    float_key[i]->close();
+                    qDebug()<<current<<" "<<remain<<" "<<"perfect";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->perfect();
                     get_score += score_per_note;
                     perfect_num++;
                     qDebug()<<perfect_num;
                     miss_num--;
+                    ui->LevelLabel->setText("Perfect");
                     ui->ScoreLabel->setText(QString::number(get_score));
                     if(i<key_num - 1)i++;
                     combo++;
@@ -135,7 +163,8 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 }
                 else if(remain > 75 && remain <= 125)
                 {
-                    qDebug()<<remain<<" "<<"max perfect";
+                    float_key[i]->close();
+                    qDebug()<<current<<" "<<remain<<" "<<"max perfect";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->maxperfect();
                     get_score += (score_per_note + 1);
@@ -143,6 +172,7 @@ Gamewindow::Gamewindow(QWidget *parent) :
                     qDebug()<<maxperfect_num;
                     perfect_num++;
                     miss_num--;
+                    ui->LevelLabel->setText("Max Perfect");
                     ui->ScoreLabel->setText(QString::number(get_score));
                     if(i<key_num - 1)i++;
                     combo++;
@@ -151,10 +181,12 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 }
                 else
                 {
-                    qDebug()<<remain<<" "<<"miss";
+                    float_key[i]->close();
+                    qDebug()<<current<<" "<<remain<<" "<<"miss";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->miss();
                     qDebug()<<miss_num;
+                    ui->LevelLabel->setText("Miss");
                     ui->ScoreLabel->setText(QString::number(get_score));
                     if(i<key_num - 1)i++;
                     if(combo >= highest_combo)highest_combo = combo;
@@ -190,13 +222,15 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 int remain = interval - Notes[i]->judge->elapsed();
                 if(remain > 0 && remain <= 50 | remain > 150 && remain < 200)
                 {
-                    qDebug()<<remain<<" "<<"great";
+                    float_key[i]->close();
+                    qDebug()<<current<<" "<<remain<<" "<<"great";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->great();
                     get_score += (score_per_note / 2);
                     great_num++;
                     qDebug()<<great_num;
                     miss_num--;
+                    ui->LevelLabel->setText("Great");
                     ui->ScoreLabel->setText(QString::number(get_score));
                     if(i<key_num - 1)i++;
                     combo++;
@@ -205,13 +239,15 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 }
                 else if(remain > 50 && remain <= 75 | remain > 125 && remain <= 150)
                 {
-                    qDebug()<<remain<<" "<<"perfect";
+                    float_key[i]->close();
+                    qDebug()<<current<<" "<<remain<<" "<<"perfect";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->perfect();
                     get_score += score_per_note;
                     perfect_num++;
                     qDebug()<<perfect_num;
                     miss_num--;
+                    ui->LevelLabel->setText("Perfect");
                     ui->ScoreLabel->setText(QString::number(get_score));
                     if(i<key_num - 1)i++;
                     combo++;
@@ -220,7 +256,8 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 }
                 else if(remain > 75 && remain <= 125)
                 {
-                    qDebug()<<remain<<" "<<"max perfect";
+                    float_key[i]->close();
+                    qDebug()<<current<<" "<<remain<<" "<<"max perfect";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->maxperfect();
                     get_score += (score_per_note + 1);
@@ -228,6 +265,7 @@ Gamewindow::Gamewindow(QWidget *parent) :
                     qDebug()<<maxperfect_num;
                     perfect_num++;
                     miss_num--;
+                    ui->LevelLabel->setText("Max Perfect");
                     ui->ScoreLabel->setText(QString::number(get_score));
                     if(i<key_num - 1)i++;
                     combo++;
@@ -236,10 +274,12 @@ Gamewindow::Gamewindow(QWidget *parent) :
                 }
                 else
                 {
-                    qDebug()<<remain<<" "<<"miss";
+                    float_key[i]->close();
+                    qDebug()<<current<<" "<<remain<<" "<<"miss";
                     Notes[i]->been_judged = true;
                     emit Notes[i]->miss();
                     qDebug()<<miss_num;
+                    ui->LevelLabel->setText("Miss");
                     ui->ScoreLabel->setText(QString::number(get_score));
                     if(i<key_num - 1)i++;
                     if(combo >= highest_combo)highest_combo = combo;
@@ -267,24 +307,56 @@ Gamewindow::Gamewindow(QWidget *parent) :
     //待优化
     connect(bgtimer,&QTimer::timeout,[=](){
         current++;
+        current2++;
         //qDebug()<<"进入判定了！";
         //qDebug()<<current<<" "<<current_i<<" "<<Notes[current_i]->note_start_time;
-        if(current == Notes[current_i]->note_start_time)
+        if(current == Notes[current_i]->note_start_time - 400)
         {
-            qDebug()<<"应在"<<Notes[current_i]->note_start_time<<"处出现";
-            //Notes[current_i]->show();
-
             float_key[i]->show();
-            qDebug()<<"实在"<<current2<<"处出现";
-            Notes[current_i++]->judge->start();
-            qDebug()<<"第"<<current_i<<"个音符开始判定了！";
+            emit float_key[i]->showed();
         }
-        if(current - Notes[i]->note_start_time >= 200)
+        //qDebug()<<current<<" "<< Notes[current_i]->note_start_time - 100<<" "<<current-Notes[current_i]->note_start_time - 100;
+        if(current_i2 == -1)
         {
-            qDebug()<<"第"<<i<<"个音符miss了！";
+
+            if(current > Notes[0]->note_start_time - 100
+                    && current < Notes[0]->note_start_time + 100)
+            {
+                float_key[i]->move(float_key[i]->pos().x(),
+                                  (current  - Notes[0]->note_start_time + 100) * 1);
+                //qDebug() << "moving called1";
+            }
+
+        }
+        else
+        {
+            if(current > Notes[current_i2]->note_start_time - 100
+                    && current < Notes[current_i2]->note_start_time + 100)
+            {
+                float_key[i]->move(float_key[i]->pos().x(),
+                                  (current - Notes[current_i2]->note_start_time + 100) * 1);
+                qDebug() << "moving called2->"<<current - Notes[current_i2]->note_start_time + 100;
+            }
+
+        }
+        if(current == Notes[current_i]->note_start_time - 100)
+        {
+            //qDebug()<<"应在"<<Notes[current_i]->note_start_time - 100<<"处出现";
+            //Notes[current_i]->show();
+            //qDebug()<<"实在"<<current2<<"处出现";
+            current_i2 = current_i;
+            Notes[current_i++]->judge->start();
+            qDebug()<<"第"<<current_i<<"个音符开始判定了！此时是"<<current;
+        }
+        if(current - Notes[i]->note_start_time >= 100)
+        {
+            float_key[i]->close();
+            qDebug()<<current<<" "<<"第"<<i<<"个音符miss了，应该在"<<Notes[i]->note_start_time - 100<<"处按下。";
+
             Notes[i]->been_judged = true;
             emit Notes[i]->miss();
-            qDebug()<<miss_num;
+            //qDebug()<<miss_num;
+            ui->LevelLabel->setText("Miss");
             ui->ScoreLabel->setText(QString::number(get_score));
             if(i<key_num - 1)i++;
             ui->ComboLabel->setText(QString::number(combo));
@@ -321,6 +393,7 @@ void Gamewindow::init(){
     });
 
     connect(player,&QMediaPlayer::stateChanged,[=](){
+        qDebug()<<"player状态改变";
         if(player->state() == QMediaPlayer::StoppedState)
         {
             bgtimer->stop();
@@ -328,17 +401,21 @@ void Gamewindow::init(){
             QTimer::singleShot(1000, &eventloop, SLOT(quit()));
             //qDebug()<<"1s";
             eventloop.exec();//打完歌以后暂停1s，开启贤者模式（不是
+            qDebug()<<"成绩开始计算";
             res->init();
+            qDebug()<<"成绩计算完成";
             emit Game_Over();
         }
     });
 
 
+
+    qDebug()<<"GameWindow::init执行了！";
     //需求：写出音符下落模块
-    song_length = 2000;//通过文件读取歌曲长度（待实现）
+    //song_length = 2000;//通过文件读取歌曲长度（待实现）
     i = 0;//第i个音符
-    remaining_length = song_length;
-    key_num = Notes.length();
+    //remaining_length = song_length;
+    key_num = Notes.length() - 1;
     qDebug()<<key_num;
     miss_num = key_num;
     //if(key_num == 0)key_num++;
@@ -349,9 +426,15 @@ void Gamewindow::init(){
     player->setMedia(QUrl("qrc:/mus/"+nameofsong+".wav"));
 
     bgtimer->start(1);
-    bgtimer2->start(1);
+    connect(bgtimer2,&QTimer::timeout,[=](){
+        current2++;
+    });
+
 
     player->play();
+
+    qDebug()<<"GameWindow::init执行了！";
+
 }
 
 void Gamewindow::keyPressEvent(QKeyEvent *event)
@@ -364,24 +447,28 @@ void Gamewindow::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Z:
             //特效
             //qDebug()<<"press  z";
+            qDebug()<<"按下时是"<<current2;
             emit Z_triggered();
             break;
 
         case Qt::Key_V:
             //特效
             //qDebug()<<"press  v";
+            qDebug()<<"按下时是"<<current2;
             emit Z_triggered();
             break;
 
         case Qt::Key_X:
             //特效
             //qDebug()<<"press  x";
+            qDebug()<<"按下时是"<<current2;
             emit X_triggered();
             break;
 
         case Qt::Key_C:
             //特效
             //qDebug()<<"press  c";
+            qDebug()<<"按下时是"<<current2;
             emit X_triggered();
             break;
         case Qt::Key_Escape:

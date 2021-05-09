@@ -27,6 +27,8 @@ OptionWindow::OptionWindow(QWidget *parent) :
     //点击back按钮回到mainwindow
     connect(ui->FinishBtn,&QPushButton::clicked,this,[=](){
         user_name = ui->NameEdit->text();
+        mythread myT;
+        myT.inf_save();
         emit this->FinishBtnpushed();
     });
 

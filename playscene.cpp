@@ -99,7 +99,7 @@ PlayScene::PlayScene(QWidget *parent) :
         sele->myload->load_song();
     });
 
-    connect(sele,&DifficultyAndSpeedSelectWindow::Music_Stop,[=](){
+    connect(sele,&DifficultyAndSpeedSelectWindow::Music_Stop,this,[=](){
         preview->stop();
     });
 
@@ -112,6 +112,8 @@ PlayScene::PlayScene(QWidget *parent) :
     connect(sele,&DifficultyAndSpeedSelectWindow::Re_Select,[=](){
         this->show();
     });
+
+
 
 
 

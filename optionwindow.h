@@ -2,7 +2,7 @@
 #define OPTIONWINDOW_H
 
 #include <QMainWindow>
-
+#include "mythread.h"
 #include "source.h"
 
 namespace Ui {

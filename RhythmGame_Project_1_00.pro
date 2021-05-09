@@ -14,7 +14,6 @@ SOURCES += \
     gamewindow.cpp \
     main.cpp \
     mainwindow.cpp \
-    musicselectwindow.cpp \
     mylabel.cpp \
     mythread.cpp \
     newroom.cpp \
@@ -32,7 +31,6 @@ HEADERS += \
     difficultyandspeedselectwindow.h \
     gamewindow.h \
     mainwindow.h \
-    musicselectwindow.h \
     mylabel.h \
     mythread.h \
     newroom.h \

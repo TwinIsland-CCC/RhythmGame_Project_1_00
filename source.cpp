@@ -64,7 +64,7 @@ int intervall=0;   //定时器超时时间间隔
 
 double current_speed=0;
 
-QVector<QLabel*>float_key={};     //用于创建音符
+QVector<mylabel*>float_key={};     //用于创建音符
 
 source::source()
 {

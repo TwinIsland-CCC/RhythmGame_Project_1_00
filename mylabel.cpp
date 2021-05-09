@@ -4,7 +4,10 @@
 mylabel::mylabel(QWidget *parent) :
     QLabel(parent)
 {
+    connect(this,&mylabel::showed,[=]()
+    {
 
+    });
 }
 
 void mylabel::mousePressEvent(QMouseEvent *ev){

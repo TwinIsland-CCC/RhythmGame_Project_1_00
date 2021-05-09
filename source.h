@@ -38,8 +38,8 @@
 
 #include "note.h"
 #include "data.h"
-#include "mylabel.h"
 #include "newroom.h"
+#include "mylabel.h"
 
 class Note;
 
@@ -99,7 +99,7 @@ extern double get_potential;
 extern QVector<rhythm>key_load;  //用于存储游戏时音符顺序
 extern QVector<archive>save_data;
 
-extern QVector<QLabel*>float_key;
+extern QVector<mylabel*>float_key;
 
 
 class source

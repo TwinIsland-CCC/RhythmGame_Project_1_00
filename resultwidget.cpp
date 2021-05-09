@@ -108,6 +108,8 @@ void ResultWidget::init()
     ui->LevelLabel->setText(get_level);
     player->play();//开始播放，也可以用按钮的方式，这里用的是菜单栏中的action
 
+
+
     mythread myT;
     myT.over_save();
 }

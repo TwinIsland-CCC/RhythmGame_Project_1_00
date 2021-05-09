@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>table/test.txt</file>
+        <file>table/loadstar.txt</file>
+        <file>table/paradise.txt</file>
     </qresource>
 </RCC>

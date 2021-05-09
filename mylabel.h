@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QLabel>
-#include "source.h"
 #include <QMouseEvent>
 
 namespace Ui {
@@ -18,10 +17,12 @@ public:
     explicit mylabel(QWidget *parent = nullptr);
     ~mylabel();
     void mousePressEvent(QMouseEvent *ev);
+    char type = 'Z';
     int y = 0;
 
 signals:
     void clicked();
+    void showed();
 
 private:
 
