@@ -40,7 +40,7 @@ void mythread::load_song()
         str1 >> note.key;
         str1 >> note.token;
         key_num++;
-        qDebug()<<note.code <<" "<< note.key <<" "<< note.token<<" ";//<<key_num;
+        //qDebug()<<note.code <<" "<< note.key <<" "<< note.token<<" ";//<<key_num;
         key_load.push_back(note);
 
     }
@@ -50,7 +50,7 @@ void mythread::load_song()
     score_per_note = 10000000 / key_num;
     for(int i=0;i<key_num;i++)
     {
-        qDebug()<<"在给第"<<i<<"个音符赋值";
+        //qDebug()<<"在给第"<<i<<"个音符赋值";
         Note* dot = new Note(nullptr,key_load[i].token,key_load[i].key);
         Notes.push_back(dot);
         mylabel* dot2 = new mylabel;
@@ -74,6 +74,7 @@ void mythread::load_song()
 
     emit load_song_finsh();
     key_num -= 1;
+    qDebug()<<"共有"<<key_num<<"个音符";
     cout<<"load_song执行完毕";
 
 }

@@ -43,33 +43,7 @@ Gamewindow::Gamewindow(QWidget *parent) :
     //预先为音符数组connect一下判定
     //如果计时器没关着，检测到按键按下后计时器停止
 
-    connect(ui->PauseBtn,&QPushButton::clicked,[=](){
-        bgtimer->stop();
-        player->pause();
-        PauseWindow* paus = new PauseWindow;
-        paus->setWindowModality(Qt::ApplicationModal);
-        paus->show();
-        connect(paus,&PauseWindow::game_continue,[=](){
-            player->play();
-            bgtimer->start(1);
-            paus->close();
-        });
-        //restart和exit
-        connect(paus,&PauseWindow::game_restart,[=](){
-            player->play();
-            bgtimer->start(1);
-            paus->close();
-        });
-        connect(paus,&PauseWindow::game_exit,[=](){
-            paus->close();
-            ResultWidget* res = new ResultWidget();
-            res->init();
-            res->show();
-            emit Game_Over();
-            this->close();
-        });
 
-    });
 
     movie.setFileName(":/test/cat2.gif");//已经在类中声明了movie
     ui->label->setMovie(&movie);
@@ -327,7 +301,7 @@ Gamewindow::Gamewindow(QWidget *parent) :
             {
                 float_key[i1]->show();
                 //emit float_key[i1]->showed();
-                qDebug()<<current<<" "<< Notes[current_i]->note_start_time + 100<<" "<<current-Notes[current_i]->note_start_time + 100;
+                //qDebug()<<current<<" "<< Notes[current_i]->note_start_time + 100<<" "<<current-Notes[current_i]->note_start_time + 100;
 
                 float_key[i1]->move(float_key[i1]->pos().x(),(current  - Notes[i1]->note_start_time + 100) * 2);
 
@@ -368,8 +342,8 @@ Gamewindow::Gamewindow(QWidget *parent) :
             //qDebug()<<"应在"<<Notes[current_i]->note_start_time - 100<<"处出现";
             //Notes[current_i]->show();
             //qDebug()<<"实在"<<current2<<"处出现";
-            current_i2 = current_i;
-            Notes[current_i++]->judge->start();
+            qDebug()<<"经过了"<<tim.elapsed()<<"ms";
+            //Notes[current_i++]->judge->start();
             qDebug()<<"第"<<current_i<<"个音符开始判定了！此时是"<<current;
         }
         if(current - Notes[i]->note_start_time >= 100)
@@ -400,6 +374,33 @@ void Gamewindow::init(){
     //创建成绩窗口
     ResultWidget* res = new ResultWidget();
     res->setWindowModality(Qt::ApplicationModal);
+
+    connect(ui->PauseBtn,&QPushButton::clicked,[=](){
+        bgtimer->stop();
+        player->pause();
+        PauseWindow* paus = new PauseWindow;
+        paus->setWindowModality(Qt::ApplicationModal);
+        paus->show();
+        connect(paus,&PauseWindow::game_continue,[=](){
+            player->play();
+            bgtimer->start(1);
+            paus->close();
+        });
+        //restart和exit
+        connect(paus,&PauseWindow::game_restart,[=](){
+            player->play();
+            bgtimer->start(1);
+            paus->close();
+        });
+        connect(paus,&PauseWindow::game_exit,[=](){
+            paus->close();
+            res->init();
+            res->show();
+            emit Game_Over();
+            this->close();
+        });
+
+    });
 
     //主要的游戏交互窗口
     //QElapsedTimer* coun = new QElapsedTimer();
@@ -449,16 +450,18 @@ void Gamewindow::init(){
 
     player->setMedia(QUrl("qrc:/mus/"+nameofsong+".wav"));
 
-    bgtimer->start(1);
+
     connect(bgtimer2,&QTimer::timeout,[=](){
         current2++;
     });
 
+    bgtimer->start(1);
 
     player->play();
 
     qDebug()<<"GameWindow::init执行了！";
 
+    //tim.start();
 }
 
 void Gamewindow::keyPressEvent(QKeyEvent *event)
