@@ -24,7 +24,6 @@ public:
     //type是音符的类型，暂时只有0和1，都是单键
     int y = 0;//实现动画
     bool been_judged = false;
-    void drawBackGround(QWidget* w,QString img);
 
 signals:
     void maxperfect();//四种信号，对应四种判定

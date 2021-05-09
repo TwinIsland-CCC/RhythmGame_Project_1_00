@@ -62,12 +62,10 @@ void mythread::load_song()
         if(dot->type == 'Z' || dot->type == 'V')
         {
             float_key[i]->type = 'Z';
-            //float_key[i]->move(320,0);
         }
         else if(dot->type == 'X' || dot->type == 'C')
         {
             float_key[i]->type = 'X';
-            //float_key[i]->move(480,0);
         }
     }
     file->close();
@@ -118,43 +116,17 @@ void mythread::load_save()
         qDebug()<<a.grade;
         str1 >> a.potential;
         qDebug()<<a.potential;
-
         save_data.push_back(a);
 
-
     }
-
 
     file1->close();
     file2->close();
 
-
-
     cout<<"load_save执行完毕";
 
-
 }
 
-void mythread::keep_save()
-{
-    cout<<"keep_save执行了";
-
-
-
-
-
-//    if(save_data.size()!=0)
-//    {
-//        ofstream save_file("../save/save.txt",ios::out|ios::binary);
-
-//        for(int i=0;i<numofsong;i++)
-//        {
-//            save_file.write(reinterpret_cast<char*>(&save_data[i]),sizeof(save_data[i]));
-//        }
-
-//        save_file.close();
-//    }
-}
 
 void mythread::over_save()//保存
 {

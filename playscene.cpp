@@ -14,7 +14,7 @@ PlayScene::PlayScene(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    statuslabel = new QLabel;
+    statuslabel = new QLabel(this);
     ui->statusBar->addPermanentWidget(statuslabel);
     statusbartext = "欢迎，";
     statusbartext+=user_name;
@@ -27,7 +27,7 @@ PlayScene::PlayScene(QWidget *parent) :
     ui->PttLabel->setText(QString::number(your_potential));
     ui->IconLabel->setPixmap(QPixmap(user_icon));
 
-    preview = new QMediaPlayer;
+    preview = new QMediaPlayer(this);
     preview->setMedia(QUrl("qrc:/mus/music.wav"));
     preview->setVolume(50);
     //preview->play();
@@ -37,9 +37,9 @@ PlayScene::PlayScene(QWidget *parent) :
 
     //为SchrollArea设置透明度
     //0为完全透明，1为完全不透明，但不知道我的为啥是一块黑的
-    QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
-    effect->setOpacity(1);
-    ui->scrollArea->setGraphicsEffect(effect);
+//    QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
+//    effect->setOpacity(1);
+//    ui->scrollArea->setGraphicsEffect(effect);
 
     //点击back按钮回到mainwindow
     connect(ui->Backbtn,&QPushButton::clicked,this,[=](){
@@ -53,6 +53,7 @@ PlayScene::PlayScene(QWidget *parent) :
     preview->setMedia(QUrl("qrc:/mus/preview/preview/paradise_preview_BPM126.mp3"));
     nameofsong = "paradise";
     current_song = 0;
+    delete pix;
 
     //点击选歌栏中每一首歌，在背景里显示相应封面
     //需求：切换特效
@@ -64,6 +65,7 @@ PlayScene::PlayScene(QWidget *parent) :
        preview->play();
        nameofsong = ui->toolButton->text();
        current_song = 0;
+       delete pix;
 
 
     });
@@ -77,6 +79,7 @@ PlayScene::PlayScene(QWidget *parent) :
        //qDebug()<<nameofsong;
 
        current_song = 1;
+       delete pix;
     });
     connect(ui->toolButton_3,&QToolButton::clicked,this,[=](){
        preview->stop();
@@ -88,6 +91,7 @@ PlayScene::PlayScene(QWidget *parent) :
        //qDebug()<<nameofsong;
 
        current_song = 2;
+       delete pix;
     });
 
     //点击选中那首歌以后，点击play进入难度选择、调速页面，播放BGMpreview

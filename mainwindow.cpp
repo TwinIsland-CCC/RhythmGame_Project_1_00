@@ -20,17 +20,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     //创建选择谱面窗体
-    PlayScene* play = new PlayScene;
-    OptionWindow* option = new OptionWindow;
+    PlayScene* play = new PlayScene(this);
+    OptionWindow* option = new OptionWindow(this);
 
-    init = new mythread;
+    init = new mythread(this);
     initthread = new QThread(this);
     init->moveToThread(initthread);
     initthread->start();
 
-    //connect(this,&QWidget::,init,&mythread::load_save);
-    //connect(init,&mythread::load_widget_signal,this,&Widget::DealLoadWidget);
-    connect(ui->ExitBtn,&QPushButton::clicked,init,&mythread::keep_save);
 
 //    if(new_or_old)
 //    {
@@ -39,8 +36,8 @@ MainWindow::MainWindow(QWidget *parent)
 //    }
 
     //为ui添加背景音乐(一会再写)
-    player = new QMediaPlayer;//设置背景音乐
-    QMediaPlaylist* list = new QMediaPlaylist;
+    player = new QMediaPlayer(this);//设置背景音乐
+    QMediaPlaylist* list = new QMediaPlaylist(this);
     list->addMedia(QUrl("qrc:/mus/music.wav"));
     list->setPlaybackMode(QMediaPlaylist::Loop);
     player->setPlaylist(list);
@@ -48,8 +45,8 @@ MainWindow::MainWindow(QWidget *parent)
     player->play();//开始播放，也可以用按钮的方式，这里用的是菜单栏中的action
 
     //小彩蛋
-    meow = new QMediaPlayer;
-    QMediaPlaylist* list2 = new QMediaPlaylist;
+    meow = new QMediaPlayer(this);
+    QMediaPlaylist* list2 = new QMediaPlaylist(this);
     list2->addMedia(QUrl("qrc:/mus/sounds/sounds/meow.mp3"));
     list2->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
     meow->setPlaylist(list2);
@@ -120,7 +117,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //新需求：左上角和状态栏都显示用户名和ptt，并且在左上角显示头像
     //已完成
-    statuslabel = new QLabel;
+    statuslabel = new QLabel(this);
     ui->statusBar->addPermanentWidget(statuslabel);
     statusbartext = "欢迎，";
     statusbartext+=user_name;

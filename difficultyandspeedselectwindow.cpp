@@ -15,23 +15,12 @@ DifficultyAndSpeedSelectWindow::DifficultyAndSpeedSelectWindow(QWidget *parent) 
 //        emit this->backbtnpushed();
 //    });
 
-    //线程
-    loadthread =new QThread(this);
-    myload=new mythread;
-    //myload->moveToThread(loadthread);
-    //loadthread->start();
-
-
-    //connect(ui->Playbtn,&QPushButton::clicked,myload,&mythread::load_song);
-
-
-
 
     connect(ui->Playbtn,&QToolButton::clicked,this,[=](){
         //创建主要游戏窗体
         emit Music_Stop();//让preview停止
         this->hide();
-        Gamewindow* game = new Gamewindow;
+        Gamewindow* game = new Gamewindow(this);
         game->show();
         game->init();
         connect(game,&Gamewindow::Game_Over,[=](){
@@ -65,8 +54,6 @@ void DifficultyAndSpeedSelectWindow::init()
 
 DifficultyAndSpeedSelectWindow::~DifficultyAndSpeedSelectWindow()
 {
-    loadthread->quit();
-    loadthread->wait();
     delete ui;
 }
 

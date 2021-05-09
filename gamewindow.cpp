@@ -24,47 +24,20 @@ Gamewindow::Gamewindow(QWidget *parent) :
 
     //bgtimer->setTimerType(Qt::PreciseTimer);
 
-
-    connect(ui->Mainkey1,&QPushButton::clicked,[=](){
-        //qDebug()<<"key1被按下";
-        //实现判定模块
-        //如果计时器没关着，检测到按键按下后计时器停止
-
-
-    });
-    connect(ui->Mainkey2,&QPushButton::clicked,[=](){
-        //qDebug()<<"key2被按下";
-        //实现判定模块
-        //如果计时器没关着，检测到按键按下后计时器停止
-
-
-    });
-
-    //预先为音符数组connect一下判定
-    //如果计时器没关着，检测到按键按下后计时器停止
-
-
-
     movie.setFileName(":/test/cat2.gif");//已经在类中声明了movie
     ui->label->setMovie(&movie);
     movie.start();
 
-    meow = new QMediaPlayer;
-    QMediaPlaylist* list2 = new QMediaPlaylist;
+    meow = new QMediaPlayer(this);
+    QMediaPlaylist* list2 = new QMediaPlaylist(this);
     list2->addMedia(QUrl("qrc:/mus/sounds/sounds/meow.mp3"));
     list2->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
     meow->setPlaylist(list2);
     meow->setVolume(100);
-    connect(ui->label,&mylabel::clicked,[=](){
+    connect(ui->label,&mylabel::clicked,this,[this](){
         meow->stop();
         meow->play();
     });
-
-    //创建线程
-    mythread* jud = new mythread();//为判定创建线程
-    jud->moveToThread(&judgethread);
-    judgethread.start();
-
 
     for(int v = 0;v<key_num;v++)
     {
@@ -372,13 +345,13 @@ Gamewindow::Gamewindow(QWidget *parent) :
 
 void Gamewindow::init(){
     //创建成绩窗口
-    ResultWidget* res = new ResultWidget();
+    ResultWidget* res = new ResultWidget(this);
     res->setWindowModality(Qt::ApplicationModal);
 
     connect(ui->PauseBtn,&QPushButton::clicked,[=](){
         bgtimer->stop();
         player->pause();
-        PauseWindow* paus = new PauseWindow;
+        PauseWindow* paus = new PauseWindow(this);
         paus->setWindowModality(Qt::ApplicationModal);
         paus->show();
         connect(paus,&PauseWindow::game_continue,[=](){
@@ -516,8 +489,6 @@ void Gamewindow::keyReleaseEvent(QKeyEvent *event)
 
 Gamewindow::~Gamewindow()
 {
-    judgethread.quit();//退出线程
-    judgethread.wait();
     delete ui;
 }
 

@@ -21,7 +21,6 @@ public slots:
     void load_widget();
     void load_song();
     void load_save();
-    void keep_save();
     void calculate_judge();
     void over_save();
     void inf_save();
